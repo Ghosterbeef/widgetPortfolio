@@ -97,10 +97,12 @@
         background: linear-gradient(to right top, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.4));
         min-height: 500px;
         height: 70vh;
+        max-height: 70vh;
         border-radius: 40px;
         backdrop-filter: blur(20px);
         display: grid;
         grid-template-columns: 1fr max-content;
+        grid-template-rows: 1fr;
         overflow: hidden;
     }
 
