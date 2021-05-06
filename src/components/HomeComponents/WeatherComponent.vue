@@ -31,9 +31,7 @@
             fetch("https://api.ipgeolocation.io/ipgeo?apiKey=9a6726603499432885466ac4ffb606b4")
                 .then(response => response.json())
                 .then(json => {
-                    console.log(json)
-                    this.city=json.geoplugin_city
-                    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${json.city}&units=metric&appid=2a0a43cfc4acc7191c01bdc98ed07c9b&lang=ru`)
+                    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${json.district}&units=metric&appid=2a0a43cfc4acc7191c01bdc98ed07c9b&lang=ru`)
                         .then(response => response.json())
                         .then(json => {
                             this.$refs.weatherImg.src = require(`../../assets/icons/WeatherIcons/${json.weather[0].icon}.svg`)
@@ -55,7 +53,6 @@
                     .then(response => response.json())
                     .then(json => {
                         this.$refs.weatherImg.src = require(`../../assets/icons/WeatherIcons/${json.weather[0].icon}.svg`)
-                        //this.$refs.cityName.textContent = json.name
                         this.$refs.description.textContent = json.weather[0].description
                         this.$refs.temp.innerHTML = 'Температура ' + json.main.temp + '&deg;'
                         this.$refs.feelsLike.innerHTML = 'Ощущается как ' + json.main.feels_like + '&deg;'

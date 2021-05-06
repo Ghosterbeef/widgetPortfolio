@@ -9,7 +9,18 @@
 
 <script>
     export default {
-        name: "NewsComponent"
+        name: "NewsComponent",
+        mounted() {
+            const NewsAPI = require('newsapi')
+            const newsapi = new NewsAPI('9445bbbb0fea431fab616a61724334cf');
+            newsapi.v2.topHeadlines({
+                category: 'politics',
+                language: 'ru',
+                country: 'ru'
+            }).then(response => {
+                console.log(response)
+            })
+        }
     }
 </script>
 
