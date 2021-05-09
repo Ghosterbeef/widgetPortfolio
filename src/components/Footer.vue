@@ -37,4 +37,10 @@
         font-weight: bold;
         font-size: 1.2rem;
     }
+
+    @media (max-width: 720px) {
+        footer{
+            display: none;
+        }
+    }
 </style>

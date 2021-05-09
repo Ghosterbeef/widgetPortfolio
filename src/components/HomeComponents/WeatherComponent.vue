@@ -31,7 +31,8 @@
             fetch("https://api.ipgeolocation.io/ipgeo?apiKey=9a6726603499432885466ac4ffb606b4")
                 .then(response => response.json())
                 .then(json => {
-                    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${json.district}&units=metric&appid=2a0a43cfc4acc7191c01bdc98ed07c9b&lang=ru`)
+                    const city = json.district.split("'").join('')
+                    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=2a0a43cfc4acc7191c01bdc98ed07c9b&lang=ru`)
                         .then(response => response.json())
                         .then(json => {
                             this.$refs.weatherImg.src = require(`../../assets/icons/WeatherIcons/${json.weather[0].icon}.svg`)
@@ -82,6 +83,7 @@
     }
 
     .cityName {
+        max-width: 80%;
         background: linear-gradient(to right top, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.3));
         border: none;
         border-radius: 5px;

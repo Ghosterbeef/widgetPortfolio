@@ -10,7 +10,7 @@
     export default {
         name: "NewsComponent",
         mounted() {
-            fetch('https://www.liga.net/news/all/rss.xml').then(response => console.log(response))
+            //fetch('https://www.liga.net/news/all/rss.xml').then(response => console.log(response))
         }
     }
 </script>

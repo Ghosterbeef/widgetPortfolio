@@ -101,7 +101,14 @@
         }
     }
 
-    @media (max-width: 720px) {
+    @media (max-width: 720px){
+        .home{
+            max-height: 100vh;
+        }
+    }
+
+
+    @media (max-width: 550px) {
         .home {
             grid-template-columns: 1fr;
             grid-template-rows: repeat(5, minmax(max-content, 400px));

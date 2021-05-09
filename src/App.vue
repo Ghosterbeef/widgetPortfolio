@@ -72,6 +72,14 @@
         position: relative;
     }
 
+    html{
+        height: 100%;
+    }
+
+    body{
+        height: 100%;
+    }
+
     #app {
         font-family: Avenir, Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
@@ -79,9 +87,9 @@
         text-align: center;
         color: #2c3e50;
         min-width: 100vw;
-        min-height: 100vh;
+        min-height: 100%;
         background: linear-gradient(60deg, rgba(63, 94, 251, 1) 0%, rgba(77, 171, 199, 1) 50%, rgba(252, 70, 107, 1) 100%);
-        overflow: hidden;
+        overflow-x: hidden;
         display: grid;
         grid-template-rows: max-content 1fr;
         align-items: center;
@@ -125,6 +133,9 @@
     
     @media (max-width: 720px) {
         main{
+            width: 100vw;
+            min-height: 100%;
+            border-radius: 0;
             grid-template-columns: 1fr;
             grid-template-rows: 1fr max-content;
         }
