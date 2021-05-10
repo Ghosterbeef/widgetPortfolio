@@ -1,6 +1,6 @@
 <template>
     <section class="charter news">
-        <h3>Новости</h3>
+        <h3>Статьи</h3>
         <div class="news_body">
         </div>
     </section>

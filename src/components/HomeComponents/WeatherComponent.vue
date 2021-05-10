@@ -18,38 +18,39 @@
 </template>
 
 <script>
+    import {useStore} from 'vuex'
     export default {
         name: "WeatherComponent",
         data() {
+            const store = useStore()
             return {
+                store,
                 directions: ['Северный', 'Северо-восточный', 'Восточный',
                     'Юго-восточный', 'Южный', 'Юго-западный', 'Западный', 'Северо-западный'],
-                city: ""
+                location: store.state.userData.location,
+                city: location,
             }
         },
         mounted() {
-            fetch("https://api.ipgeolocation.io/ipgeo?apiKey=9a6726603499432885466ac4ffb606b4")
+
+            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${this.location}&units=metric&appid=2a0a43cfc4acc7191c01bdc98ed07c9b&lang=ru`)
                 .then(response => response.json())
                 .then(json => {
-                    const city = json.district.split("'").join('')
-                    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=2a0a43cfc4acc7191c01bdc98ed07c9b&lang=ru`)
-                        .then(response => response.json())
-                        .then(json => {
-                            this.$refs.weatherImg.src = require(`../../assets/icons/WeatherIcons/${json.weather[0].icon}.svg`)
-                            this.city = json.name
-                            this.$refs.description.textContent = json.weather[0].description
-                            this.$refs.temp.innerHTML = 'Температура ' + json.main.temp + '&deg;'
-                            this.$refs.feelsLike.innerHTML = 'Ощущается как ' + json.main.feels_like + '&deg;'
-                            this.$refs.windSpeed.textContent = 'Скорость ветра ' + json.wind.speed + " м/с"
-                            let degrees = json.wind.deg * 8 / 360
-                            degrees = Math.round(degrees, 0)
-                            degrees = (degrees + 8) % 8
-                            this.$refs.windDir.textContent = "Направление ветра "+this.directions[degrees]
-                        })
+                    this.$refs.weatherImg.src = require(`../../assets/icons/WeatherIcons/${json.weather[0].icon}.svg`)
+                    this.city = json.name
+                    this.$refs.description.textContent = json.weather[0].description
+                    this.$refs.temp.innerHTML = 'Температура ' + json.main.temp + '&deg;'
+                    this.$refs.feelsLike.innerHTML = 'Ощущается как ' + json.main.feels_like + '&deg;'
+                    this.$refs.windSpeed.textContent = 'Скорость ветра ' + json.wind.speed + " м/с"
+                    let degrees = json.wind.deg * 8 / 360
+                    degrees = Math.round(degrees, 0)
+                    degrees = (degrees + 8) % 8
+                    this.$refs.windDir.textContent = "Направление ветра " + this.directions[degrees]
                 })
         },
-        methods:{
+        methods: {
             updateWeather: function () {
+
                 fetch(`https://api.openweathermap.org/data/2.5/weather?q=${this.city}&units=metric&appid=2a0a43cfc4acc7191c01bdc98ed07c9b&lang=ru`)
                     .then(response => response.json())
                     .then(json => {
@@ -61,9 +62,9 @@
                         let degrees = json.wind.deg * 8 / 360
                         degrees = Math.round(degrees, 0)
                         degrees = (degrees + 8) % 8
-                        this.$refs.windDir.textContent = "Направление ветра "+this.directions[degrees]
+                        this.$refs.windDir.textContent = "Направление ветра " + this.directions[degrees]
                     })
-            }
+            },
         }
     }
 </script>
@@ -84,8 +85,8 @@
 
     .cityName {
         max-width: 80%;
-        background: linear-gradient(to right top, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.3));
-        border: none;
+        border: 1px solid white;
+        background: transparent;
         border-radius: 5px;
         color: rgba(44, 62, 80, 0.7);
         text-align: center;
@@ -97,7 +98,7 @@
         text-transform: uppercase;
     }
 
-    .temperature{
+    .temperature {
         width: 100%;
         display: flex;
         flex-direction: row;
@@ -108,7 +109,7 @@
         width: 170px;
     }
 
-    .feelsLike{
+    .feelsLike {
         width: 170px;
     }
 
@@ -125,11 +126,11 @@
         justify-content: space-evenly;
     }
 
-    .windSpeed{
+    .windSpeed {
         width: 155px;
     }
 
-    .windDir{
+    .windDir {
         width: 155px;
     }
 </style>

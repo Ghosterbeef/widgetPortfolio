@@ -34,6 +34,7 @@
     import DevelopmentOnly from "./components/DevelopmentOnly";
     import Bubbles from "./components/bubbles";
     import Footer from "./components/Footer";
+    import {useStore} from 'vuex'
 
     export default {
         name: "app",
@@ -45,10 +46,46 @@
         data() {
             const app = document.querySelector("#app")
             return {
-                app
+                app,
+                store: useStore()
             }
         },
+        beforeMount() {
+            //vuex init
+            let location = this.getCookie("location")
+            if (!location)
+                fetch("https://api.ipgeolocation.io/ipgeo?apiKey=9a6726603499432885466ac4ffb606b4")
+                    .then(response => response.json())
+                    .then(json => {
+                        location = json.district.split("'").join('')
+                        document.cookie = `location=${location}`
+                    })
+            this.store.state.userData.location = location
+        },
         mounted() {
+            //DevelopmentOnly
+            const devCtx = this
+            setTimeout(function () {
+                devCtx.store.commit("addNotification", {
+                    id: 1,
+                    appName: "Ghosterbeef",
+                    content: "Приложение находится в разработке. Вы не сможете убрать это уведомление.",
+                    options: {},
+                    deletable: false
+                })
+            }, 1000)
+            setTimeout(function () {
+                devCtx.store.commit("addNotification", {
+                    id: 200,
+                    appName: "Ghosterbeef",
+                    content: "Просто смахните это уведомление=) Это уведоиление для теста переполнения контейнера текстом",
+                    options: {},
+                    deletable: true
+                })
+            }, 3000)
+            //DevelopmentOnly
+
+
             let rotateTo = 60
             let ctx = this
             setInterval(function () {
@@ -58,7 +95,15 @@
                 ctx.app.style.background = `linear-gradient(${rotateTo}deg, rgba(63,94,251,1) 0%, rgba(77,171,199,1) 50%, rgba(252,70,107,1) 100%)`
             }, 16)
         },
-        methods: {}
+        methods: {
+            getCookie: function (cookie_name) {
+                let results = document.cookie.match('(^|;) ?' + cookie_name + '=([^;]*)(;|$)');
+                if (results)
+                    return (unescape(results[2]));
+                else
+                    return null;
+            }
+        }
     }
 </script>
 
@@ -143,7 +188,7 @@
         nav{
             grid-column: 1/2;
             grid-row: 2/3;
-            padding: 20px 0;
+            padding: 10px 0;
             flex-direction: row;
         }
     }

@@ -12,7 +12,7 @@
     // @ is an alias to /src
 
     import DateComponent from "../components/HomeComponents/DateComponent";
-    import NewsComponent from "../components/HomeComponents/NewsComponent";
+    import NewsComponent from "../components/HomeComponents/ArticlesComponent";
     import WeatherComponent from "../components/HomeComponents/WeatherComponent";
     import NotificationComponent from "../components/HomeComponents/NotificationComponent";
     export default {
@@ -39,6 +39,7 @@
     h2 {
         grid-area: 1/1/2/3;
         color: rgba(44, 62, 80, 0.7);
+        max-height: max-content;
     }
 
     .charter {;
@@ -111,10 +112,23 @@
     @media (max-width: 550px) {
         .home {
             grid-template-columns: 1fr;
-            grid-template-rows: repeat(5, minmax(max-content, 400px));
+            grid-template-rows: repeat(5, minmax(max-content, 400px)) max-content;
             transition: 0.1s;
             overflow-y: scroll;
             grid-column-gap: 0;
+            position: relative;
+        }
+
+        .home::after{
+            content: " ";
+            display: inline-block;
+            grid-area: 6/1/7/2;
+            width: 100%;
+            height: 1px;
+        }
+
+        .charter{
+            max-height: 50vh;
         }
 
         .date {
@@ -122,6 +136,7 @@
         }
 
         .notification {
+            min-height: 50vh;
             grid-area: 3/1/4/2;
         }
 
@@ -130,6 +145,7 @@
         }
 
         .news {
+            min-height: 50vh;
             grid-area: 5/1/6/2;
         }
 
