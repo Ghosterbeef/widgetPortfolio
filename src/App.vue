@@ -52,13 +52,14 @@
         },
         beforeMount() {
             //vuex init
-            let location = this.getCookie("location")
+            document.cookie = `userIPLocation=Севастополь`
+            let location = this.getCookie("userIPLocation")
             if (!location)
                 fetch("https://api.ipgeolocation.io/ipgeo?apiKey=9a6726603499432885466ac4ffb606b4")
                     .then(response => response.json())
                     .then(json => {
                         location = json.district.split("'").join('')
-                        document.cookie = `location=${location}`
+                        document.cookie = `userIPLocation=${location}`
                     })
             this.store.state.userData.location = location
         },
