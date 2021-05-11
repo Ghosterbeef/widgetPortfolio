@@ -34,7 +34,7 @@
         },
         mounted() {
             this.updateWeather()
-            this.weatherUpdateInterval = setInterval(this.updateWeather, this.store.state.userData.weatherData.weatherUpdateTiming)
+            this.weatherUpdateInterval = setInterval(this.updateWeather, this.store.state.userData.weatherData.weatherUpdateTiming*60*1000)
         },
         methods: {
             updateWeather: function () {
