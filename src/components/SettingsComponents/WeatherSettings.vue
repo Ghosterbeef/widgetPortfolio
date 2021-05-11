@@ -65,14 +65,14 @@
         },
         methods: {
             saveUserCity: function (e) {
-                document.cookie = `userSelectedLocation=${e.target.value}`
+                document.cookie = `userSelectedLocation=${e.target.value}; max-age=2592000000`
                 this.store.state.userData.weatherData.location = e.target.value
             },
             saveTiming: function (value) {
-                document.cookie = `userWeatherUpdateTiming=${value}`
+                document.cookie = `userWeatherUpdateTiming=${value}; max-age=2592000000`
             },
             saveUseIpLocation: function (value) {
-                document.cookie = `userUseIpLocation=${value}`
+                document.cookie = `userUseIpLocation=${value}; max-age=2592000000`
                 this.store.state.userData.weatherData.useIpLocation = value
             }
         }

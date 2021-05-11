@@ -63,28 +63,38 @@
             let weatherUpdateTiming = this.getCookie('userWeatherUpdateTiming')
 
             if (weatherUpdateTiming === undefined || !weatherUpdateTiming) {
+                console.log("!weatherUpdateTiming")
+                console.log(document.cookie)
                 weatherUpdateTiming = 20
             }
 
             if (AmPmFormat === undefined || AmPmFormat === "false") {
+                console.log("!AmPmFormat")
+                console.log(document.cookie)
                 AmPmFormat = false
             } else {
                 AmPmFormat = true
             }
 
             if (selectedTimeZoneOffset === undefined) {
+                console.log("!selectedTimeZoneOffset")
+                console.log(document.cookie)
                 selectedTimeZoneOffset = timeZoneOffset
             }
 
 
             if (!timeZoneOffset) {
+                console.log("!timeZoneOffset")
+                console.log(document.cookie)
                 timeZoneOffset = new Date().getTimezoneOffset() * (-1)
-                document.cookie = `userTimeZoneOffset=${timeZoneOffset}`
+                document.cookie = `userTimeZoneOffset=${timeZoneOffset}; max-age=2592000000`
             }
 
 
 
             if (useIpLocation === undefined || useIpLocation === "false") {
+                console.log("!useIpLocation")
+                console.log(document.cookie)
                 useIpLocation = false
             } else {
                 useIpLocation = true
@@ -114,7 +124,7 @@
                         .then(response => response.json())
                         .then(json => {
                             location = json.district.split("'").join('')
-                            document.cookie = `userIPLocation=${location}`
+                            document.cookie = `userIPLocation=${location}; max-age=2592000000`
                         })
                         .catch(error => {
                             this.store.state.commit('addNotification', {
@@ -127,6 +137,8 @@
 
                         }).then(() => {
                         if (!userSelectedLocation) {
+                            console.log("!userSelectedLocation")
+                            console.log(document.cookie)
                             userSelectedLocation = location
                         }
                     })

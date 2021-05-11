@@ -63,10 +63,10 @@
         },
         methods: {
             saveSelected: function f(selected) {
-                document.cookie = `userSelectedTimeZoneOffset=${selected}`
+                document.cookie = `userSelectedTimeZoneOffset=${selected}; max-age=2592000000`
             },
             saveAmPm: function (value) {
-                document.cookie = `userSelectedAmPmFormat=${value}`
+                document.cookie = `userSelectedAmPmFormat=${value}; max-age=2592000000`
             }
         }
     }
