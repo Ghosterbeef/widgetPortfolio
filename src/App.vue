@@ -1,27 +1,26 @@
 <template>
+    <Preloader v-if="preloader"></Preloader>
     <bubbles></bubbles>
     <DevelopmentOnly></DevelopmentOnly>
     <main>
         <router-view/>
         <nav>
             <router-link to="/">
-                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
-                    <title>HOME</title>
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+                    <title>Домашняя</title>
                     <path d="M32 18.451l-16-12.42-16 12.42v-5.064l16-12.42 16 12.42zM28 18v12h-8v-8h-8v8h-8v-12l12-9z"></path>
                 </svg>
             </router-link>
             <router-link to="/Apps">
-                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
-                    <title>APPS</title>
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                    <title>Приложения</title>
                     <path d="M15.984 20.016v-4.031h4.031v4.031h-4.031zM15.984 14.016v-4.031h4.031v4.031h-4.031zM9.984 8.016v-4.031h4.031v4.031h-4.031zM15.984 3.984h4.031v4.031h-4.031v-4.031zM9.984 14.016v-4.031h4.031v4.031h-4.031zM3.984 14.016v-4.031h4.031v4.031h-4.031zM3.984 20.016v-4.031h4.031v4.031h-4.031zM9.984 20.016v-4.031h4.031v4.031h-4.031zM3.984 8.016v-4.031h4.031v4.031h-4.031z"></path>
                 </svg>
             </router-link>
-            <router-link to="/Info">
-                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
-                    <title>INFO</title>
-                    <path d="M14 9.5c0-0.825 0.675-1.5 1.5-1.5h1c0.825 0 1.5 0.675 1.5 1.5v1c0 0.825-0.675 1.5-1.5 1.5h-1c-0.825 0-1.5-0.675-1.5-1.5v-1z"></path>
-                    <path d="M20 24h-8v-2h2v-6h-2v-2h6v8h2z"></path>
-                    <path d="M16 0c-8.837 0-16 7.163-16 16s7.163 16 16 16 16-7.163 16-16-7.163-16-16-16zM16 29c-7.18 0-13-5.82-13-13s5.82-13 13-13 13 5.82 13 13-5.82 13-13 13z"></path>
+            <router-link to="/Settings">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+                    <title>Настройки</title>
+                    <path d="M29.181 19.070c-1.679-2.908-0.669-6.634 2.255-8.328l-3.145-5.447c-0.898 0.527-1.943 0.829-3.058 0.829-3.361 0-6.085-2.742-6.085-6.125h-6.289c0.008 1.044-0.252 2.103-0.811 3.070-1.679 2.908-5.411 3.897-8.339 2.211l-3.144 5.447c0.905 0.515 1.689 1.268 2.246 2.234 1.676 2.903 0.672 6.623-2.241 8.319l3.145 5.447c0.895-0.522 1.935-0.82 3.044-0.82 3.35 0 6.067 2.725 6.084 6.092h6.289c-0.003-1.034 0.259-2.080 0.811-3.038 1.676-2.903 5.399-3.894 8.325-2.219l3.145-5.447c-0.899-0.515-1.678-1.266-2.232-2.226zM16 22.479c-3.578 0-6.479-2.901-6.479-6.479s2.901-6.479 6.479-6.479c3.578 0 6.479 2.901 6.479 6.479s-2.901 6.479-6.479 6.479z"></path>
                 </svg>
             </router-link>
         </nav>
@@ -31,6 +30,7 @@
 
 
 <script>
+    import Preloader from "./components/Preloader";
     import DevelopmentOnly from "./components/DevelopmentOnly";
     import Bubbles from "./components/bubbles";
     import Footer from "./components/Footer";
@@ -39,6 +39,7 @@
     export default {
         name: "app",
         components: {
+            Preloader,
             Footer,
             Bubbles,
             DevelopmentOnly
@@ -46,22 +47,102 @@
         data() {
             const app = document.querySelector("#app")
             return {
+                preloader: true,
                 app,
                 store: useStore()
             }
         },
         beforeMount() {
             //vuex init
-            document.cookie = `userIPLocation=Севастополь`
+            let useIpLocation = this.getCookie("userUseIpLocation")
             let location = this.getCookie("userIPLocation")
-            if (!location)
+            let userSelectedLocation = this.getCookie("userSelectedLocation")
+            let timeZoneOffset = this.getCookie("userTimeZoneOffset")
+            let selectedTimeZoneOffset = this.getCookie("userSelectedTimeZoneOffset")
+            let AmPmFormat = this.getCookie("userSelectedAmPmFormat")
+            let weatherUpdateTiming = this.getCookie('userWeatherUpdateTiming')
+
+            if (weatherUpdateTiming === undefined) {
+                weatherUpdateTiming = 20
+            }
+
+            if (AmPmFormat === undefined || AmPmFormat === "false") {
+                AmPmFormat = false
+            } else {
+                AmPmFormat = true
+            }
+
+            if (selectedTimeZoneOffset === undefined) {
+                selectedTimeZoneOffset = timeZoneOffset
+            }
+
+
+            if (!timeZoneOffset) {
+                timeZoneOffset = new Date().getTimezoneOffset() * (-1)
+                document.cookie = `userTimeZoneOffset=${timeZoneOffset}`
+            }
+
+
+
+            if (useIpLocation === undefined || useIpLocation === "false") {
+                useIpLocation = false
+            } else {
+                useIpLocation = true
+            }
+
+
+            if (useIpLocation) {
                 fetch("https://api.ipgeolocation.io/ipgeo?apiKey=9a6726603499432885466ac4ffb606b4")
                     .then(response => response.json())
                     .then(json => {
                         location = json.district.split("'").join('')
+                        console.log(location)
                         document.cookie = `userIPLocation=${location}`
                     })
-            this.store.state.userData.location = location
+                    .catch(error => {
+                        this.store.state.commit('addNotification', {
+                            id: new Date().getTime(),
+                            appName: "Определение местоположения",
+                            content: error,
+                            options: {},
+                            deletable: true
+                        })
+                    })
+            } else {
+                if (!location)
+                    fetch("https://api.ipgeolocation.io/ipgeo?apiKey=9a6726603499432885466ac4ffb606b4")
+                        .then(response => response.json())
+                        .then(json => {
+                            location = json.district.split("'").join('')
+                            document.cookie = `userIPLocation=${location}`
+                        })
+                        .catch(error => {
+                            this.store.state.commit('addNotification', {
+                                id: new Date().getTime(),
+                                appName: "Определение местоположения",
+                                content: error,
+                                options: {},
+                                deletable: true
+                            })
+
+                        }).then(() => {
+                        if (!userSelectedLocation) {
+                            userSelectedLocation = location
+                        }
+                    })
+
+            }
+
+            if (useIpLocation)
+                this.store.state.userData.weatherData.location = location
+            else
+                this.store.state.userData.weatherData.location = userSelectedLocation
+            this.store.state.userData.weatherData.userSelectedLocation = userSelectedLocation
+            this.store.state.userData.dateData.timeZoneOffset = timeZoneOffset
+            this.store.state.userData.dateData.selectedTimeZone = selectedTimeZoneOffset
+            this.store.state.userData.dateData.AmPmType = AmPmFormat
+            this.store.state.userData.weatherData.weatherUpdateTiming = weatherUpdateTiming
+            this.store.state.userData.weatherData.useIpLocation = useIpLocation
         },
         mounted() {
             //DevelopmentOnly
@@ -79,16 +160,21 @@
                 devCtx.store.commit("addNotification", {
                     id: 200,
                     appName: "Ghosterbeef",
-                    content: "Просто смахните это уведомление=) Это уведоиление для теста переполнения контейнера текстом",
+                    content: "Просто смахните это уведомление=) Это уведомление для теста переполнения контейнера текстом",
                     options: {},
                     deletable: true
                 })
             }, 3000)
             //DevelopmentOnly
 
+            let ctx = this
+            window.addEventListener("load", function () {
+                setTimeout(function () {
+                    ctx.preloader = false
+                }, 2000)
+            })
 
             let rotateTo = 60
-            let ctx = this
             setInterval(function () {
                 rotateTo += 0.2
                 if (rotateTo === 420)
@@ -118,12 +204,15 @@
         position: relative;
     }
 
-    html{
+    html {
+        width: 100vw;
         height: 100%;
     }
 
-    body{
+    body {
+        width: 100vw;
         height: 100%;
+        overflow-x: hidden;
     }
 
     #app {
@@ -160,7 +249,7 @@
         overflow: hidden;
     }
 
-    nav{
+    nav {
         grid-column: 2/3;
         display: flex;
         flex-direction: column;
@@ -176,9 +265,24 @@
     nav a.router-link-exact-active {
         fill: cornflowerblue;
     }
-    
+
+    ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+        background-color: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        border-radius: 100px;
+        background: linear-gradient(to right top, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.3));
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(to right top, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+    }
+
     @media (max-width: 720px) {
-        main{
+        main {
             width: 100vw;
             min-height: 100%;
             border-radius: 0;
@@ -186,11 +290,16 @@
             grid-template-rows: 1fr max-content;
         }
 
-        nav{
+        nav {
             grid-column: 1/2;
             grid-row: 2/3;
-            padding: 10px 0;
+            padding: 7px 0;
             flex-direction: row;
+        }
+
+        nav svg {
+            height: 25px;
+            width: 25px;
         }
     }
 

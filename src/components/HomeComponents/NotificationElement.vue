@@ -1,6 +1,6 @@
 <template>
     <div class="notifications-item" @dragstart.prevent @mousedown="mouseDragElement"
-         @touchstart="touchDragElement" :ref="'N'+id">
+         @touchstart.passive="touchDragElement" :ref="'N'+id">
         <h3 class="appName">{{appName}}</h3>
         <p class="content">{{content}}</p>
     </div>

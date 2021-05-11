@@ -31,7 +31,7 @@
         grid-template-rows: max-content max-content 1fr 2fr;
         grid-gap: 30px;
         padding: 30px;
-        max-height: 70vh;
+        max-height: 100%;
         min-height: 430px;
         transition: 0.1s;
     }
@@ -49,26 +49,12 @@
         border-radius: 20px;
         background: linear-gradient(to right top, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.3));
         padding: 0 0 32px 10px;
-        max-height: 100%;
-        min-height: 100%;
+        max-height: 90vh;
+        min-height: max-content;
         max-width: 100%;
         min-width: 100%;
     }
 
-    ::-webkit-scrollbar {
-        width: 10px;
-        height: 10px;
-        background-color: transparent;
-    }
-
-    ::-webkit-scrollbar-thumb {
-        border-radius: 100px;
-        background: linear-gradient(to right top, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.3));
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(to right top, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
-    }
 
     h3 {
         padding: 10px 0 0 0;
@@ -93,7 +79,6 @@
     .weather {
         grid-area: 2/2/4/3;
     }
-
 
     @media (max-width: 1200px) {
         .home {
@@ -128,7 +113,7 @@
         }
 
         .charter{
-            max-height: 50vh;
+            max-height: 90vh;
         }
 
         .date {

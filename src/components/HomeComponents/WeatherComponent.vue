@@ -19,6 +19,7 @@
 
 <script>
     import {useStore} from 'vuex'
+
     export default {
         name: "WeatherComponent",
         data() {
@@ -27,30 +28,16 @@
                 store,
                 directions: ['Северный', 'Северо-восточный', 'Восточный',
                     'Юго-восточный', 'Южный', 'Юго-западный', 'Западный', 'Северо-западный'],
-                location: store.state.userData.location,
-                city: location,
+                city: store.state.userData.weatherData.location,
+                weatherUpdateInterval: null
             }
         },
         mounted() {
-
-            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${this.location}&units=metric&appid=2a0a43cfc4acc7191c01bdc98ed07c9b&lang=ru`)
-                .then(response => response.json())
-                .then(json => {
-                    this.$refs.weatherImg.src = require(`../../assets/icons/WeatherIcons/${json.weather[0].icon}.svg`)
-                    this.city = json.name
-                    this.$refs.description.textContent = json.weather[0].description
-                    this.$refs.temp.innerHTML = 'Температура ' + json.main.temp + '&deg;'
-                    this.$refs.feelsLike.innerHTML = 'Ощущается как ' + json.main.feels_like + '&deg;'
-                    this.$refs.windSpeed.textContent = 'Скорость ветра ' + json.wind.speed + " м/с"
-                    let degrees = json.wind.deg * 8 / 360
-                    degrees = Math.round(degrees, 0)
-                    degrees = (degrees + 8) % 8
-                    this.$refs.windDir.textContent = "Направление ветра " + this.directions[degrees]
-                })
+            this.updateWeather()
+            this.weatherUpdateInterval = setInterval(this.updateWeather, this.store.state.userData.weatherData.weatherUpdateTiming)
         },
         methods: {
             updateWeather: function () {
-
                 fetch(`https://api.openweathermap.org/data/2.5/weather?q=${this.city}&units=metric&appid=2a0a43cfc4acc7191c01bdc98ed07c9b&lang=ru`)
                     .then(response => response.json())
                     .then(json => {
@@ -64,27 +51,39 @@
                         degrees = (degrees + 8) % 8
                         this.$refs.windDir.textContent = "Направление ветра " + this.directions[degrees]
                     })
+                    .catch((error) => {
+                        this.store.commit('addNotification', {
+                            id: new Date().getTime(),
+                            appName: "Виджет погоды",
+                            content: error,
+                            options: {},
+                            deletable: true
+                        })
+                        setTimeout(this.updateWeather, 10000)
+                    })
             },
+        },
+        beforeUnmount() {
+            clearInterval(this.weatherUpdateInterval)
         }
     }
 </script>
 
-<style scoped>
+<style>
     .weather_body {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: space-evenly;
-        max-width: 100%;
-        min-width: 100%;
         min-height: 100%;
-        max-height: 100%;
+        max-width: 100%;
         color: rgba(44, 62, 80, 0.7);
         font-weight: bold;
     }
 
     .cityName {
         max-width: 80%;
+        padding-left: 10px;
         border: 1px solid white;
         background: transparent;
         border-radius: 5px;
@@ -115,8 +114,8 @@
 
 
     .weatherImg {
-        width: 100px;
-        height: 100px;
+        width: 35%;
+        height: 35%;
     }
 
     .wind {
@@ -132,5 +131,12 @@
 
     .windDir {
         width: 155px;
+    }
+
+
+    @media (max-width: 720px){
+        .weather_body{
+            font-size: 14px;
+        }
     }
 </style>

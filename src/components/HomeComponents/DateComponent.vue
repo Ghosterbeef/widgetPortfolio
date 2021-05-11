@@ -1,9 +1,15 @@
 <template>
     <section class="charter date">
         <h3>Дата</h3>
-        <div class="date_body">
+        <div class="date_body" v-if="date">
             <div class="first_row">
-                <p class="time hours"  v-if="date.getHours()<10">
+                <p class="time hours"  v-if="date.getHours()<10 && store.state.userData.dateData.AmPmType">
+                    0{{date.getHours()}}:
+                </p>
+                <p class="time seconds" v-else-if="date.getHours()>12 && store.state.userData.dateData.AmPmType">
+                    {{date.getHours()-12}} :
+                </p>
+                <p class="time seconds" v-else-if="date.getHours()<10">
                     0{{date.getHours()}} :
                 </p>
                 <p class="time seconds" v-else>
@@ -20,6 +26,12 @@
                 </p>
                 <p class="time seconds" v-else>
                     {{date.getSeconds()}}
+                </p>
+                <p class="time hours"  v-if="date.getHours()<10 && store.state.userData.dateData.AmPmType">
+                   AM
+                </p>
+                <p class="time seconds" v-else-if="date.getHours()>12 && store.state.userData.dateData.AmPmType">
+                    PM
                 </p>
             </div>
             <div class="second_row">
@@ -44,17 +56,25 @@
 </template>
 
 <script>
+    import {useStore} from 'vuex'
     export default {
         name: "DateComponent",
         data() {
+            const store = useStore()
             return {
-                date: new Date()
+                date: null,
+                store
             }
         },
         mounted() {
             const ctx = this
+            let currentDate =  new Date()
+            let GMTDate =new Date(currentDate.getTime() + ctx.store.state.userData.dateData.timeZoneOffset * (-1) * 60 * 1000)
+            ctx.date = new Date(GMTDate.getTime() + (ctx.store.state.userData.dateData.selectedTimeZone*60*1000))
             setInterval(function () {
-                ctx.date = new Date()
+                currentDate =  new Date()
+                GMTDate =new Date(currentDate.getTime() + ctx.store.state.userData.dateData.timeZoneOffset * (-1) * 60 * 1000)
+                ctx.date = new Date(GMTDate.getTime() + (ctx.store.state.userData.dateData.selectedTimeZone*60*1000))
             }, 1000)
         }
     }

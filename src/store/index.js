@@ -6,8 +6,17 @@ export default createStore({
             notifications: [     //Хранит в себе все уведомления
             ],
             userData:{
-                location: "",
-                weatherUpdateTiming: 0
+                dateData:{
+                    AmPmType: false,
+                    timeZoneOffset: null,
+                    selectedTimeZone: null,
+                },
+                weatherData:{
+                    useIpLocation : false,
+                    location: "",
+                    userSelectedLocation: "Севастополь",
+                    weatherUpdateTiming: 20
+                }
             }
         }
     },
