@@ -61,7 +61,7 @@
                             options: {},
                             deletable: true
                         })
-                        setTimeout(this.updateWeather, 10000)
+                        setTimeout(this.updateWeather, 30000)
                     })
             },
         },
