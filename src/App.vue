@@ -62,7 +62,7 @@
             let AmPmFormat = this.getCookie("userSelectedAmPmFormat")
             let weatherUpdateTiming = this.getCookie('userWeatherUpdateTiming')
 
-            if (weatherUpdateTiming === undefined) {
+            if (weatherUpdateTiming === undefined || !weatherUpdateTiming) {
                 weatherUpdateTiming = 20
             }
 
