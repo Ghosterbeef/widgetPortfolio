@@ -41,6 +41,8 @@
                 fetch(`https://api.openweathermap.org/data/2.5/weather?q=${this.city}&units=metric&appid=2a0a43cfc4acc7191c01bdc98ed07c9b&lang=ru`)
                     .then(response => response.json())
                     .then(json => {
+                        console.log("updates")
+                        console.log(this.store.state.userData.weatherData.weatherUpdateTiming*60*1000)
                         this.$refs.weatherImg.src = require(`../../assets/icons/WeatherIcons/${json.weather[0].icon}.svg`)
                         this.$refs.description.textContent = json.weather[0].description
                         this.$refs.temp.innerHTML = 'Температура ' + json.main.temp + '&deg;'
@@ -52,6 +54,7 @@
                         this.$refs.windDir.textContent = "Направление ветра " + this.directions[degrees]
                     })
                     .catch((error) => {
+                        console.log("error")
                         this.store.commit('addNotification', {
                             id: new Date().getTime(),
                             appName: "Виджет погоды",
