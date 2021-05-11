@@ -14,7 +14,7 @@ export default createStore({
                 weatherData:{
                     useIpLocation : false,
                     location: "",
-                    userSelectedLocation: "Севастополь",
+                    userSelectedLocation: "",
                     weatherUpdateTiming: 20
                 }
             }

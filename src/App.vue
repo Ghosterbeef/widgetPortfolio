@@ -63,37 +63,25 @@
             let weatherUpdateTiming = this.getCookie('userWeatherUpdateTiming')
 
             if (weatherUpdateTiming === undefined || !weatherUpdateTiming) {
-                console.log("!weatherUpdateTiming")
-                console.log(document.cookie)
-                weatherUpdateTiming = 20
+                weatherUpdateTiming = 30
             }
 
-            if (AmPmFormat === undefined || AmPmFormat === "false") {
-                console.log("!AmPmFormat")
-                console.log(document.cookie)
+            if (AmPmFormat === undefined || AmPmFormat === "false" || AmPmFormat===null) {
                 AmPmFormat = false
             } else {
                 AmPmFormat = true
             }
 
-            if (selectedTimeZoneOffset === undefined) {
-                console.log("!selectedTimeZoneOffset")
-                console.log(document.cookie)
-                selectedTimeZoneOffset = timeZoneOffset
-            }
-
-
-            if (!timeZoneOffset) {
-                console.log("!timeZoneOffset")
-                console.log(document.cookie)
+            if (timeZoneOffset === undefined || timeZoneOffset === null) {
                 timeZoneOffset = new Date().getTimezoneOffset() * (-1)
                 document.cookie = `userTimeZoneOffset=${timeZoneOffset}; max-age=2592000000`
             }
 
+            if (selectedTimeZoneOffset === undefined || selectedTimeZoneOffset === null) {
+                selectedTimeZoneOffset = timeZoneOffset
+            }
 
-            if (useIpLocation === undefined || useIpLocation === "false") {
-                console.log("!useIpLocation")
-                console.log(document.cookie)
+            if (useIpLocation === undefined || useIpLocation === "false" || useIpLocation===null) {
                 useIpLocation = false
             } else {
                 useIpLocation = true
@@ -105,8 +93,8 @@
                     .then(response => response.json())
                     .then(json => {
                         location = json.district.split("'").join('')
-                        console.log(location)
                         document.cookie = `userIPLocation=${location}`
+                        this.store.state.userData.weatherData.location = location
                     })
                     .catch(error => {
                         this.store.state.commit('addNotification', {
@@ -127,9 +115,11 @@
                         })
                         .then(() => {
                             if (!userSelectedLocation) {
-                                console.log("!userSelectedLocation")
-                                console.log(document.cookie)
-                                userSelectedLocation = location
+                                this.store.state.userData.weatherData.location = location
+                            }
+                            else {
+                                this.store.state.userData.weatherData.location = userSelectedLocation
+                                this.store.state.userData.weatherData.userSelectedLocation = userSelectedLocation
                             }
                         })
                         .catch(error => {
@@ -141,13 +131,15 @@
                                 deletable: true
                             })
                         })
+                else {
+                    if (!userSelectedLocation)
+                        this.store.state.userData.weatherData.location = location
+                    else {
+                        this.store.state.userData.weatherData.location = userSelectedLocation
+                        this.store.state.userData.weatherData.userSelectedLocation = userSelectedLocation
+                    }
+                }
             }
-
-            if (useIpLocation)
-                this.store.state.userData.weatherData.location = location
-            else
-                this.store.state.userData.weatherData.location = userSelectedLocation
-            this.store.state.userData.weatherData.userSelectedLocation = userSelectedLocation
             this.store.state.userData.dateData.timeZoneOffset = timeZoneOffset
             this.store.state.userData.dateData.selectedTimeZone = selectedTimeZoneOffset
             this.store.state.userData.dateData.AmPmType = AmPmFormat

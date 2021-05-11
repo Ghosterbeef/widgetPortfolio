@@ -2,7 +2,7 @@
     <section class="charter weather">
         <h3>Погода</h3>
         <div id="weather_body" class="weather_body">
-            <input type="text" class="cityName" ref="cityName" v-model="city" @change="updateWeather">
+            <input type="text" class="cityName" ref="cityName" v-model="store.state.userData.weatherData.location" @change="updateWeather">
             <img class="weatherImg" src="" alt="Текущая погода" ref="weatherImg">
             <p class="description" ref="description"></p>
             <div class="temperature">
@@ -28,7 +28,6 @@
                 store,
                 directions: ['Северный', 'Северо-восточный', 'Восточный',
                     'Юго-восточный', 'Южный', 'Юго-западный', 'Западный', 'Северо-западный'],
-                city: store.state.userData.weatherData.location,
                 weatherUpdateInterval: null
             }
         },
@@ -38,7 +37,11 @@
         },
         methods: {
             updateWeather: function () {
-                fetch(`https://api.openweathermap.org/data/2.5/weather?q=${this.city}&units=metric&appid=2a0a43cfc4acc7191c01bdc98ed07c9b&lang=ru`)
+                if(!this.store.state.userData.weatherData.location){
+                    setTimeout(this.updateWeather, 1000)
+                    return
+                }
+                fetch(`https://api.openweathermap.org/data/2.5/weather?q=${this.store.state.userData.weatherData.location}&units=metric&appid=2a0a43cfc4acc7191c01bdc98ed07c9b&lang=ru`)
                     .then(response => response.json())
                     .then(json => {
                         console.log(this.store.state.userData.weatherData.weatherUpdateTiming*60*1000)
