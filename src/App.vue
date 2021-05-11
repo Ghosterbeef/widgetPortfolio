@@ -95,6 +95,9 @@
                         location = json.district.split("'").join('')
                         document.cookie = `userIPLocation=${location}`
                         this.store.state.userData.weatherData.location = location
+                        if(userSelectedLocation){
+                            this.store.state.userData.weatherData.userSelectedLocation = userSelectedLocation
+                        }
                     })
                     .catch(error => {
                         this.store.state.commit('addNotification', {
