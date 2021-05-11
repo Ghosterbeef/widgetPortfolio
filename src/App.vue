@@ -91,7 +91,6 @@
             }
 
 
-
             if (useIpLocation === undefined || useIpLocation === "false") {
                 console.log("!useIpLocation")
                 console.log(document.cookie)
@@ -126,6 +125,13 @@
                             location = json.district.split("'").join('')
                             document.cookie = `userIPLocation=${location}; max-age=2592000000`
                         })
+                        .then(() => {
+                            if (!userSelectedLocation) {
+                                console.log("!userSelectedLocation")
+                                console.log(document.cookie)
+                                userSelectedLocation = location
+                            }
+                        })
                         .catch(error => {
                             this.store.state.commit('addNotification', {
                                 id: new Date().getTime(),
@@ -134,15 +140,7 @@
                                 options: {},
                                 deletable: true
                             })
-
-                        }).then(() => {
-                        if (!userSelectedLocation) {
-                            console.log("!userSelectedLocation")
-                            console.log(document.cookie)
-                            userSelectedLocation = location
-                        }
-                    })
-
+                        })
             }
 
             if (useIpLocation)
