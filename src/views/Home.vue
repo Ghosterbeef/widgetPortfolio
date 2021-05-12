@@ -53,6 +53,7 @@
         min-height: max-content;
         max-width: 100%;
         min-width: 100%;
+        cursor: pointer;
     }
 
 

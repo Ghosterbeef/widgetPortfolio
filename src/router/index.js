@@ -20,6 +20,13 @@ const routes = [
         path: '/Settings',
         name: 'Settings',
         component: () => import(/* webpackChunkName: "about" */ '../views/Settings.vue')
+    },
+
+    //Приложения
+    {
+        path: '/Apps/WeatherApp',
+        name: 'WeatherApp',
+        component: () => import('../components/Apps/WeatherApp')
     }
 ]
 

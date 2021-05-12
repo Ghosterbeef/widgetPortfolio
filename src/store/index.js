@@ -15,7 +15,9 @@ export default createStore({
                     useIpLocation : false,
                     location: "",
                     userSelectedLocation: "",
-                    weatherUpdateTiming: 20
+                    weatherUpdateTiming: 20,
+                    lat: null,
+                    lon: null,
                 }
             }
         }
