@@ -19,10 +19,10 @@
                 <p>{{dataToDraw.current.description}}</p>
             </div>
             <div class="cloud_wiz">
-                <p>Облачность</p>
+                <p>Облачность:</p>
                 <p>{{dataToDraw.current.clouds}}%</p>
-                <p>Видимость</p>
-                <p>{{dataToDraw.current.visibility}}%</p>
+                <p>Видимость:</p>
+                <p>{{dataToDraw.current.visibility}} м</p>
             </div>
             <div class="wind_group">
                 <p>Ветер:</p>
