@@ -8,7 +8,7 @@
             </div>
         </div>
         <div class="current" v-if="dataToDraw.current">
-            <h4>{{weatherData.location || weatherData.userSelectedLocation}}</h4>
+            <input type="text" v-model="store.state.userData.weatherData.location" @change="showAllWeather">
             <p class="temp">{{dataToDraw.current.temp}}&deg;</p>
             <p class="temp_as">{{dataToDraw.current.feels_like}}&deg;</p>
             <div class="current_group">
@@ -35,7 +35,7 @@
             <h4>Погода на ближайшие 8 дней</h4>
             <div class="daily" @wheel.prevent="scrollBlock">
                 <div class="header daily_header">
-                    <p>День</p>
+                    <p>Число</p>
                     <p>Темп.(У/Д/В/Н)</p>
                     <p>Экстремумы</p>
                     <p>Ощу.(У/Д/В/Н)</p>
@@ -50,8 +50,8 @@
                     <p>Скор. ветра </p>
                 </div>
                 <div class="element daily_element" v-for="(element, index) in dataToDraw.daily" :key="index">
-                    <p v-if="element.day>=10">{{element.day}}</p>
-                    <p v-else>0{{element.day}}</p>
+                    <p v-if="element.day>=10" class="main">{{element.day}}</p>
+                    <p v-else class="main">0{{element.day}}</p>
                     <div class="group temp">
                         <p>{{element.temp.morn}}&deg;</p>
                         <p>{{element.temp.day}}&deg;</p>
@@ -104,8 +104,8 @@
                     <p>Скор. ветра </p>
                 </div>
                 <div class="element hourly_element" v-for="(element, index) in dataToDraw.hourly" :key="index">
-                    <p v-if="element.data>=10">{{element.data}}ч</p>
-                    <p v-else>0{{element.data}}ч</p>
+                    <p v-if="element.data>=10" class="main">{{element.data}}ч</p>
+                    <p v-else class="main">0{{element.data}}ч</p>
                     <p>{{element.temp}}&deg;</p>
                     <p>{{element.feels_like}}&deg;</p>
                     <div class="group desc">
@@ -167,16 +167,23 @@
             showAllWeather: function () {
                 let scopedData = this.weatherData
                 let timeOffset = this.store.state.userData.dateData.selectedTimeZone || this.store.state.userData.dateData.timeZoneOffset
-                if (!scopedData.lon || !scopedData.lat) {
+                if (scopedData.oldLocation !== scopedData.location) {
+                    console.log(scopedData.oldLocation)
+                    console.log(scopedData.location)
                     this.getCoords()
-                    setTimeout(this.showAllWeather,1000)
+                    setTimeout(this.showAllWeather, 300)
                     return
+
                 }
                 if (!timeOffset) {
                     timeOffset = 0
                 }
 
-
+                if (this.dataToDraw.alerts.length){
+                    this.dataToDraw.alerts = []
+                    this.dataToDraw.daily = []
+                    this.dataToDraw.hourly = []
+                }
 
                 fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${scopedData.lat}&lon=${scopedData.lon}&units=metric&appid=2a0a43cfc4acc7191c01bdc98ed07c9b&lang=ru`)
                     .then(response => response.json())
@@ -266,6 +273,7 @@
                         json => {
                             this.store.state.userData.weatherData.lon = json.coord.lon
                             this.store.state.userData.weatherData.lat = json.coord.lat
+                            this.store.state.userData.weatherData.oldLocation = this.store.state.userData.weatherData.location
                         }
                     )
             },
@@ -329,7 +337,7 @@
         background: linear-gradient(to right top, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.3));
     }
 
-    .alert_element h3{
+    .alert_element h3 {
         padding: 10px;
     }
 
@@ -349,14 +357,22 @@
         grid-template-columns: 1fr 1fr;
         grid-template-rows: max-content max-content max-content max-content;
         border-radius: 5px;
-        justify-content: center;
+        justify-items: center;
         border: 1px solid white;
         padding: 5px 0;
         background: linear-gradient(to right top, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.3));
     }
 
-    .current h4 {
+    .current input {
         grid-area: 1/1/2/3;
+        max-width: 300px;
+        border: 1px solid white;
+        padding: 5px;
+        border-radius: 5px;
+        background: linear-gradient(to right top, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.3));
+        font-weight: bolder;
+        text-align: center;
+        text-transform: uppercase;
     }
 
     .current .temp {
@@ -373,6 +389,7 @@
 
     .current_group {
         grid-area: 4/1/5/3;
+        width: 80%;
         display: flex;
         align-items: center;
         justify-content: space-evenly;
@@ -384,8 +401,13 @@
     }
 
     .current_group p {
-        width: 100px;
+        width: max-content;
+        max-width: 100px;
         text-align: left;
+    }
+
+    .current_group p:first-letter{
+        text-transform: uppercase;
     }
 
     .cloud_wiz {
@@ -457,6 +479,7 @@
 
     .desc {
         justify-content: center;
+        align-items: center;
     }
 
     .desc p {
@@ -526,6 +549,13 @@
 
     .desc p:first-letter {
         text-transform: uppercase;
+    }
+
+    p.main {
+        font-weight: bolder;
+        color: black;
+        background: linear-gradient(to right top, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.5));
+        width: 100%;
     }
 
     img {

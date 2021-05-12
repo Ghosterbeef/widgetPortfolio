@@ -1,16 +1,16 @@
 <template>
     <div class="preloaderWrapper">
-        <div class="box">F</div>
-        <div class="box">E</div>
-        <div class="box">E</div>
-        <div class="box">B</div>
-        <div class="box">R</div>
-        <div class="box">E</div>
-        <div class="box">T</div>
-        <div class="box">S</div>
-        <div class="box">O</div>
-        <div class="box">H</div>
         <div class="box">G</div>
+        <div class="box">H</div>
+        <div class="box">O</div>
+        <div class="box">S</div>
+        <div class="box">T</div>
+        <div class="box">E</div>
+        <div class="box">R</div>
+        <div class="box">B</div>
+        <div class="box">E</div>
+        <div class="box">E</div>
+        <div class="box">F</div>
     </div>
 </template>
 
@@ -127,20 +127,12 @@
 
     @keyframes move {
         0% {
-            left:0;
             top: 30%;
+            left:100%;
+
             opacity:0;
         }
         35% {
-            left: 41%;
-            top: 49%;
-            -moz-transform:rotate(0deg);
-            -webkit-transform:rotate(0deg);
-            -o-transform:rotate(0deg);
-            transform:rotate(0deg);
-            opacity:1;
-        }
-        65% {
             left:59%;
             top: 49%;
             -moz-transform:rotate(0deg);
@@ -149,9 +141,18 @@
             transform:rotate(0deg);
             opacity:1;
         }
+        65% {
+            left: 41%;
+            top: 49%;
+            -moz-transform:rotate(0deg);
+            -webkit-transform:rotate(0deg);
+            -o-transform:rotate(0deg);
+            transform:rotate(0deg);
+            opacity:1;
+        }
         100% {
+            left:0;
             top: 30%;
-            left:100%;
             -moz-transform:rotate(-180deg);
             -webkit-transform:rotate(-180deg);
             -o-transform:rotate(-180deg);

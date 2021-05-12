@@ -66,6 +66,7 @@
         methods: {
             saveUserCity: function (e) {
                 document.cookie = `userSelectedLocation=${e.target.value}; max-age=2592000000`
+                this.store.state.userData.weatherData.oldLocation = this.store.state.userData.weatherData.location
                 this.store.state.userData.weatherData.location = e.target.value
             },
             saveTiming: function (value) {

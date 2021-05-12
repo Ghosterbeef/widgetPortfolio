@@ -14,6 +14,7 @@ export default createStore({
                 weatherData:{
                     useIpLocation : false,
                     location: "",
+                    oldLocation: "not_city",
                     userSelectedLocation: "",
                     weatherUpdateTiming: 20,
                     lat: null,
