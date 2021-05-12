@@ -9,12 +9,24 @@ const routes = [
         component: Home
     },
     {
-        path: '/Apps',
+        path: '/Apps/',
         name: 'Apps',
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "about" */ '../views/Apps.vue')
+        component: () => import(/* webpackChunkName: "about" */ '../views/Apps.vue'),
+        children:[
+            {
+              path: '',
+              name: 'AppsHome',
+              component: () => import('../components/Apps/AppsHome')
+            },
+            {
+                path: 'WeatherApp',
+                name: 'WeatherApp',
+                component: () => import('../components/Apps/WeatherApp')
+            }
+        ]
     },
     {
         path: '/Settings',
@@ -23,11 +35,7 @@ const routes = [
     },
 
     //Приложения
-    {
-        path: '/Apps/WeatherApp',
-        name: 'WeatherApp',
-        component: () => import('../components/Apps/WeatherApp')
-    }
+
 ]
 
 const router = createRouter({

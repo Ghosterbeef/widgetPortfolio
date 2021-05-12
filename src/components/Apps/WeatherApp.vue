@@ -179,7 +179,7 @@
                     timeOffset = 0
                 }
 
-                if (this.dataToDraw.alerts.length){
+                if (this.dataToDraw.daily.length || this.dataToDraw.hourly.length || this.dataToDraw.alerts.length){
                     this.dataToDraw.alerts = []
                     this.dataToDraw.daily = []
                     this.dataToDraw.hourly = []
