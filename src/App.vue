@@ -204,6 +204,8 @@
     *, *::before, *::after {
         margin: 0;
         padding: 0;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
         box-sizing: border-box;
         z-index: 10;
         position: relative;
