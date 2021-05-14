@@ -13,7 +13,17 @@
                 }
             })
             .then(response => response.json())
-            .then(json => console.log(json))
+            .then(json => {
+                console.log(json)
+                this.src = json.items[0].iconUrls.medium
+            })
+            //https://github.com/RoyaleAPI/cr-api-data/tree/master/docs/json
+            fetch("https://royaleapi.github.io/cr-api-data/json/cards.json", {
+            })
+                .then(response => response.json())
+                .then(json => {
+                    console.log(json)
+                })
         }
     }
 </script>
