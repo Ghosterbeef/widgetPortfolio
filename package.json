@@ -12,12 +12,12 @@
     "@vueform/slider": "^1.0.5",
     "@vueform/toggle": "^1.1.0",
     "connect-history-api-fallback": "^1.6.0",
-    "core-js": "^3.6.5",
+    "core-js": "^3.12.1",
     "express": "^4.17.1",
     "express-sslify": "^1.2.0",
     "serve-static": "^1.14.1",
     "vue": "^3.0.0",
-    "vue-router": "^4.0.0-0",
+    "vue-router": "^4.0.8",
     "vuex": "^4.0.0-0"
   },
   "devDependencies": {

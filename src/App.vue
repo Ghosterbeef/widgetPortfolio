@@ -208,7 +208,6 @@
         -moz-box-sizing: border-box;
         box-sizing: border-box;
         z-index: 10;
-        position: relative;
     }
 
     html {
@@ -254,8 +253,9 @@
         display: grid;
         grid-template-columns: 1fr max-content;
         grid-template-rows: 1fr;
-        overflow: hidden;
+        overflow-x: hidden;
     }
+
 
     nav {
         grid-column: 2/3;

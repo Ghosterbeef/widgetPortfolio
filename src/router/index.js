@@ -25,6 +25,11 @@ const routes = [
                 path: 'WeatherApp',
                 name: 'WeatherApp',
                 component: () => import('../components/Apps/WeatherApp')
+            },
+            {
+                path: 'HashTableApp',
+                name: 'HashTableApp',
+                component: () =>import('../components/Apps/HashTableVisualApp/HashTableVisualApp')
             }
         ]
     },

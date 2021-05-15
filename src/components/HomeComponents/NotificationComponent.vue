@@ -51,6 +51,7 @@
     }
 
     .notifications {
+        position: relative;
         transition: 0s;
         overflow: hidden;
         border-radius: 20px;
@@ -101,14 +102,12 @@
 
     .clear_all-wrapper {
         position: absolute;
-        bottom: 30px;
-        width: 100%;
+        bottom: 5px;
+        right: 5px;
     }
 
     .clear_all-btn {
         cursor: pointer;
-        right: 15px;
-        position: absolute;
         padding: 5px;
         border-radius: 10px;
         border: 1px solid white;

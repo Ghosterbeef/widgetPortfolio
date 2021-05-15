@@ -54,6 +54,7 @@
         max-width: 100%;
         min-width: 100%;
         cursor: pointer;
+        position: relative;
     }
 
 
