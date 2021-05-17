@@ -30,6 +30,16 @@ const routes = [
                 path: 'HashTableApp',
                 name: 'HashTableApp',
                 component: () =>import('../components/Apps/HashTableVisualApp/HashTableVisualApp')
+            },
+            {
+                path: 'MultidimensionalUtilityApp',
+                name: 'MultidimensionalUtilityApp',
+                component: () => import('../components/Apps/MultidimensionalUtilityApp/MultidimensionalUtilityApp')
+            },
+            {
+                path: 'ClashStatsApp',
+                name: 'ClashStatsApp',
+                component: () => import('../components/Apps/ClashRoyaleStatsApp/ClashRoyaleStatsApp')
             }
         ]
     },
