@@ -1,17 +1,28 @@
 <template>
     <section class="card">
-        <div class="elixir">
-            <img src="./icons/Elixir.png" alt="">
-            <p>{{cardData.elixir}}</p>
-        </div>
 
         <div class="front">
+            <div class="elixir">
+                <img src="./icons/Elixir.png" alt="">
+                <p class="elixir_value">{{cardData.elixir}}</p>
+            </div>
             <img :src="cardData.imgSrc" alt="Карта">
-            <h3 class="card_name">{{cardData.name}}</h3>
+            <div class="front_info">
+                <h3 class="card_name">{{cardData.name}}</h3>
+                <p>Редкость</p>
+                <p>Тип</p>
+            </div>
         </div>
         <div class="back">
             <div class="card_info">
                 <h3 class="card_name">{{cardData.name}}</h3>
+                <p>Урон</p>
+                <p>Урон в секунду</p>
+                <p>Здоровье</p>
+                <p>Скорость атаки</p>
+                <p>Цель</p>
+                <p>Скорость</p>
+                <p>Дальность</p>
             </div>
         </div>
     </section>
@@ -30,34 +41,35 @@
 </script>
 
 <style scoped>
-    .card{
+    .card {
         position: relative;
     }
 
-    .elixir{
+    .elixir {
         width: 30px;
         max-height: 30px;
         position: absolute;
         z-index: 100;
+        top: 0;
         right: 0;
     }
 
-    .elixir img{
+    .elixir img {
         position: absolute;
         top: 0;
         left: 0;
         width: 30px;
     }
 
-    .elixir p{
+    .elixir .elixir_value {
         color: white;
         font-weight: bold;
         position: absolute;
-        top: 6px;
-        left: 11px
+        right: 10px;
+        top: 8px;
     }
 
-    .front{
+    .front {
         width: 120px;
         border-radius: 20px;
         color: white;
@@ -67,30 +79,30 @@
         z-index: 1;
     }
 
-    .card img{
+    .card img {
         transition: transform 200ms;
         max-width: 100%;
         height: auto;
     }
 
 
-    .card h3{
+    .card h3 {
         padding: 0;
         color: white;
     }
 
 
-    .card:hover img{
+    .card:hover img {
         transform: translateY(-40px);
     }
 
-    .card:hover .front h3{
+    .card:hover .front_info {
         opacity: 0;
     }
 
-    .back{
+    .back {
         position: absolute;
-        top:0;
+        top: 0;
         left: -30px;
         width: 180px;
         background-color: #333333;
@@ -100,18 +112,20 @@
         border-radius: 20px;
     }
 
-    .card:hover .back{
+    .card:hover .back {
         transition: transform 200ms;
-        transform: scale(1,1);
+        transform: scale(1, 1);
     }
 
-    .card_info{
+    .card_info {
         width: 100%;
         z-index: 1;
         position: absolute;
         bottom: 0;
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: space-evenly;
+        color: white;
     }
 </style>
