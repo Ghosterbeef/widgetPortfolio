@@ -1,6 +1,6 @@
 <template>
     <section class="clash_royale_app">
-        <card></card>
+        <card v-if="cardData.length" :card-data="cardData[0]"></card>
     </section>
 </template>
 
@@ -15,7 +15,7 @@
                 repoCardInfo: null,//Информация из репозитория
                 langCardInfo: null,
                 repoCardStats: {},
-
+                cardData:[{}]
             }
         },
         mounted() {
@@ -61,6 +61,12 @@
                     this.langCardInfo = json
                     console.log(this.langCardInfo)
                 })
+
+            setTimeout(() => {
+                this.cardData[0].name = this.offCardInfo.items[0].name
+                this.cardData[0].imgSrc =this.offCardInfo.items[0].iconUrls.medium
+                this.cardData[0].elixir = this.repoCardInfo[0].elixir
+            },2000)
         }
     }
 </script>

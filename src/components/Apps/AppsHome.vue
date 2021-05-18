@@ -55,8 +55,10 @@
         border: 1px solid white;
         background: linear-gradient(to right top, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.3));
         cursor: pointer;
-        max-height: 50px;
-        max-width: 50px;
+        height: 50px;
+        min-height: 50px;
+        width: 50px;
+        min-width: 50px;
         position: relative;
     }
 
