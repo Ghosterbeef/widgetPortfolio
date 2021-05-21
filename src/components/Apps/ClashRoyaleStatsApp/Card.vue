@@ -9,20 +9,20 @@
             <img :src="cardData.imgSrc" alt="Карта">
             <div class="front_info">
                 <h3 class="card_name">{{cardData.name}}</h3>
-                <p>Редкость</p>
-                <p>Тип</p>
+                <div class="front_stats">
+                    <p>Редкость {{cardData.rarity}}</p>
+                    <p>Тип {{cardData.type}}</p>
+                </div>
             </div>
         </div>
         <div class="back">
             <div class="card_info">
                 <h3 class="card_name">{{cardData.name}}</h3>
-                <p>Урон</p>
-                <p>Урон в секунду</p>
-                <p>Здоровье</p>
-                <p>Скорость атаки</p>
-                <p>Цель</p>
-                <p>Скорость</p>
-                <p>Дальность</p>
+                <p>Урон {{cardData.damage}}</p>
+                <p>Урон в секунду {{cardData.DPS}}</p>
+                <p>Здоровье {{cardData.hitpoints}}</p>
+                <p>Скорость атаки {{cardData.atackSpeed}}</p>
+                <p>Дальность {{cardData.range}}</p>
             </div>
         </div>
     </section>
@@ -42,7 +42,9 @@
 
 <style scoped>
     .card {
+        border-radius: 10px;
         position: relative;
+        margin: 10px;
     }
 
     .elixir {
@@ -67,16 +69,27 @@
         position: absolute;
         right: 10px;
         top: 8px;
+        transition: transform 200ms;
     }
 
     .front {
         width: 120px;
         border-radius: 20px;
-        color: white;
+        color: #222222;
         display: flex;
         flex-direction: column;
         justify-content: space-around;
         z-index: 1;
+    }
+
+    .front_info{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .front_stats{
+        display: flex;
+        justify-content: space-evenly;
     }
 
     .card img {
@@ -88,9 +101,13 @@
 
     .card h3 {
         padding: 0;
-        color: white;
+        color: #222222;
     }
 
+
+    .card:hover{
+        z-index: 100000
+    }
 
     .card:hover img {
         transform: translateY(-40px);
@@ -100,16 +117,21 @@
         opacity: 0;
     }
 
+    .card:hover .elixir_value{
+        transform: translateY(-40px);
+    }
+
     .back {
         position: absolute;
         top: 0;
         left: -30px;
         width: 180px;
-        background-color: #333333;
-        min-height: 200px;
+        background: linear-gradient(to right top, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.5));
+        min-height: 220px;
         z-index: -1;
         transform: scale(0, 0);
         border-radius: 20px;
+        backdrop-filter: blur(10px);
     }
 
     .card:hover .back {
@@ -118,14 +140,16 @@
     }
 
     .card_info {
+        padding: 10px;
         width: 100%;
         z-index: 1;
         position: absolute;
         bottom: 0;
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: start;
         justify-content: space-evenly;
-        color: white;
+        color: #222222;
+        font-size: 15px;
     }
 </style>

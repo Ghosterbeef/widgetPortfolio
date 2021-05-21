@@ -6,43 +6,53 @@
                 <div class="hash_table_header">
                     <button id="hashSort" class="sortChange-btn" @click.stop="sortChange">#
                         <span class="asc"
-                              v-if="typeOfSort.type === 'hashSort' && typeOfSort.counter === 0" ></span>
-                        <span  class="desc"
-                               v-else-if="typeOfSort.type === 'hashSort' && typeOfSort.counter === 1"></span>
+                              v-if="typeOfSort.type === 'hashSort' && typeOfSort.counter === 0"></span>
+                        <span class="desc"
+                              v-else-if="typeOfSort.type === 'hashSort' && typeOfSort.counter === 1"></span>
                     </button>
                     <button id="surnameSort" class="sortChange-btn" @click.stop="sortChange">Фамилия
-                        <span  class="asc"
-                               v-if="typeOfSort.type === 'surnameSort' && typeOfSort.counter === 0"></span>
-                        <span  class="desc"
-                               v-else-if="typeOfSort.type === 'surnameSort' && typeOfSort.counter === 1"></span>
+                        <span class="asc"
+                              v-if="typeOfSort.type === 'surnameSort' && typeOfSort.counter === 0"></span>
+                        <span class="desc"
+                              v-else-if="typeOfSort.type === 'surnameSort' && typeOfSort.counter === 1"></span>
                     </button>
                     <button id="nameSort" class="sortChange-btn" @click.stop="sortChange">Имя
-                        <span  class="asc"
-                               v-if="typeOfSort.type === 'nameSort' && typeOfSort.counter === 0"></span>
-                        <span  class="desc"
-                               v-else-if="typeOfSort.type === 'nameSort' && typeOfSort.counter === 1"></span>
+                        <span class="asc"
+                              v-if="typeOfSort.type === 'nameSort' && typeOfSort.counter === 0"></span>
+                        <span class="desc"
+                              v-else-if="typeOfSort.type === 'nameSort' && typeOfSort.counter === 1"></span>
                     </button>
                     <button id="patronymicSort" class="sortChange-btn" @click.stop="sortChange">Отчество
-                        <span  class="asc"
-                               v-if="typeOfSort.type === 'patronymicSort' && typeOfSort.counter === 0"></span>
-                        <span  class="desc"
-                               v-else-if="typeOfSort.type === 'patronymicSort' && typeOfSort.counter === 1"></span>
+                        <span class="asc"
+                              v-if="typeOfSort.type === 'patronymicSort' && typeOfSort.counter === 0"></span>
+                        <span class="desc"
+                              v-else-if="typeOfSort.type === 'patronymicSort' && typeOfSort.counter === 1"></span>
                     </button>
                     <button id="ageSort" class="sortChange-btn" @click.stop="sortChange">Возраст
-                        <span  class="asc"
-                               v-if="typeOfSort.type === 'ageSort' && typeOfSort.counter === 0"></span>
-                        <span  class="desc"
-                               v-else-if="typeOfSort.type === 'ageSort' && typeOfSort.counter === 1"></span>
+                        <span class="asc"
+                              v-if="typeOfSort.type === 'ageSort' && typeOfSort.counter === 0"></span>
+                        <span class="desc"
+                              v-else-if="typeOfSort.type === 'ageSort' && typeOfSort.counter === 1"></span>
                     </button>
                 </div>
-                <div class="hash_table_body">
-                    <Hash_Table_element v-for="(elements, index) in elementsToDraw" :key="index"
-                                        :hash="elements.hash"
-                                        :surname="elements.surname"
-                                        :name="elements.name"
-                                        :patronymic="elements.patronymic"
-                                        :age="elements.age" @deleteElement="deleteElement">
-                    </Hash_Table_element>
+                <div class="table_trashcan_wrapper">
+                    <div class="hash_table_body">
+                        <Hash_Table_element v-for="(elements, index) in elementsToDraw" :key="index"
+                                            :hash="elements.hash"
+                                            :surname="elements.surname"
+                                            :name="elements.name"
+                                            :patronymic="elements.patronymic"
+                                            :age="elements.age" @deleteElement="deleteElement">
+                        </Hash_Table_element>
+                    </div>
+                    <div class="trashcan_body" v-show="displayTrashCan">
+                        <trash-can-element v-for="(element,index) in trashCan" :key="index"
+                                           :hash="element.hash"
+                                           :surname="element.surname"
+                                           :name="element.name"
+                                           :patronymic="element.patronymic"
+                                           :age="element.age"></trash-can-element>
+                    </div>
                 </div>
             </div>
             <div class="control_panel-wrapper">
@@ -60,13 +70,14 @@
 <script>
     import Hash_Table_element from "./Hash_Table_element";
     import Hash_table_control_panel from "./Hash_table_control_panel";
+    import TrashCanElement from "./TrashCanElement";
 
 
     let hashTable = {}
     let trashCan = []
     export default {
         name: "HashTableVisualApp",
-        components: {Hash_table_control_panel, Hash_Table_element},
+        components: {TrashCanElement, Hash_table_control_panel, Hash_Table_element},
         data() {
             return {
                 elementsToDraw: [],
@@ -76,7 +87,9 @@
                 },
                 isSearched: false,
                 trashCanLength: trashCan.length,
-                randomData: null
+                randomData: null,
+                displayTrashCan: true,
+                trashCan
             }
         },
         mounted() {
@@ -142,7 +155,7 @@
                     alert("Элемент с введенными данными отсутствует в таблице")
                 } else {
                     const searchResult = this.searchElementWithCollision(result, data)
-                    if(!searchResult){
+                    if (!searchResult) {
                         alert("Элемент с введенными данными отсутствует в таблице!")
                         return
                     }
@@ -168,6 +181,7 @@
                     if (prevElement === -1) {
                         hashTable[hash] = searchResult.next
                         trashCan.unshift({
+                            hash: hash,
                             surname: data.surname,
                             name: data.name,
                             patronymic: data.patronymic,
@@ -177,6 +191,7 @@
                     } else {
                         prevElement.next = searchResult.next
                         trashCan.unshift({
+                            hash: hash,
                             surname: data.surname,
                             name: data.name,
                             patronymic: data.patronymic,
@@ -365,14 +380,14 @@
                 return Math.floor(Math.random() * (max - min + 1)) + min; //Максимум и минимум включаются
             },
             addRandomElement: function () {
-                    const data = {
-                        surname: this.randomData.surnames[this.getRandomIntInclusive(0, this.randomData.surnames.length - 1)].toString(),
-                        name: this.randomData.names[this.getRandomIntInclusive(0, this.randomData.names.length - 1)].toString(),
-                        patronymic: this.randomData.patronymics[this.getRandomIntInclusive(0, this.randomData.patronymics.length - 1)].toString(),
-                        age: this.getRandomIntInclusive(1, 120).toString()
-                    }
-                    this.addElement(data)
-                    this.getElementsToDraw()
+                const data = {
+                    surname: this.randomData.surnames[this.getRandomIntInclusive(0, this.randomData.surnames.length - 1)].toString(),
+                    name: this.randomData.names[this.getRandomIntInclusive(0, this.randomData.names.length - 1)].toString(),
+                    patronymic: this.randomData.patronymics[this.getRandomIntInclusive(0, this.randomData.patronymics.length - 1)].toString(),
+                    age: this.getRandomIntInclusive(1, 120).toString()
+                }
+                this.addElement(data)
+                this.getElementsToDraw()
             },
             sortChange: function (e) {
                 let target
@@ -509,9 +524,10 @@
         display: flex;
         justify-content: center;
         position: static;
+        height: 100%;
     }
 
-    .app_container{
+    .app_container {
         width: 90%;
         max-width: 100%;
         display: flex;
@@ -519,13 +535,28 @@
         align-items: center;
         position: static;
         justify-content: space-evenly;
+        height: 100%;
+        max-height: 100%;
+    }
+
+    .table_trashcan_wrapper{
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        overflow: hidden;
+    }
+
+    .trashcan_body{
+        padding-top: 50px;
+        max-height: 50%;
     }
 
     .hash_table {
         width: 100%;
         min-width: 300px;
         max-height: 50vh;
-        min-height: 50vh;
+        min-height: 50%;
         display: flex;
         flex-direction: column;
         overflow: auto;
@@ -544,7 +575,7 @@
         top: 0;
     }
 
-    .hash_table_header button{
+    .hash_table_header button {
         position: relative;
     }
 
@@ -553,7 +584,7 @@
         top: 8px;
         right: 5px;
         font-family: 'icomoon' !important;
-        speak: never;
+        /*speak: never;*/
         font-size: 1.1rem;
         font-style: normal;
         font-weight: normal;
@@ -576,11 +607,11 @@
         -moz-osx-font-smoothing: grayscale;
     }
 
-    .asc::after{
+    .asc::after {
         content: "\ea4c";
     }
 
-    .desc::after{
+    .desc::after {
         content: "\ea4d";
     }
 
@@ -608,6 +639,7 @@
     }
 
     .hash_table_body {
+        overflow-y: auto;
     }
 
 

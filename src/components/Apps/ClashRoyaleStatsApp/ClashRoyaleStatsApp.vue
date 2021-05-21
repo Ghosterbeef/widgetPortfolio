@@ -1,21 +1,22 @@
 <template>
     <section class="clash_royale_app">
-        <card v-if="cardData.length" :card-data="cardData[0]"></card>
+        <card v-for="(item,index) in cardData" :key="index" :card-data="item"></card>
     </section>
 </template>
 
 <script>
     import Card from "./Card";
+
     export default {
         name: "ClashRoyaleStatsApp",
         components: {Card},
-        data(){
-            return{
+        data() {
+            return {
                 offCardInfo: null, //Информация из официального api
                 repoCardInfo: null,//Информация из репозитория
                 langCardInfo: null,
                 repoCardStats: {},
-                cardData:[{}]
+                cardData: []
             }
         },
         mounted() {
@@ -63,20 +64,36 @@
                 })
 
             setTimeout(() => {
-                this.cardData[0].name = this.offCardInfo.items[0].name
-                this.cardData[0].imgSrc =this.offCardInfo.items[0].iconUrls.medium
-                this.cardData[0].elixir = this.repoCardInfo[0].elixir
-            },2000)
+                for (let i = 0; i < this.langCardInfo.length; i++) {
+                    this.cardData[i] = {}
+                    this.cardData[i].name = this.langCardInfo[i]._lang.name.ru
+                    this.cardData[i].imgSrc = this.offCardInfo.items[i].iconUrls.medium
+                    this.cardData[i].elixir = this.repoCardInfo[i].elixir
+                    this.cardData[i].rarity = this.repoCardInfo[i].rarity
+                    this.cardData[i].type = this.repoCardInfo[i].type
+                    if (this.repoCardStats.troops[i].hitpoints_per_level)
+                        this.cardData[i].hitpoints = this.repoCardStats.troops[i].hitpoints_per_level[9]
+                    if (this.repoCardStats.troops[i].damage_per_level)
+                        this.cardData[i].damage = this.repoCardStats.troops[i].damage_per_level[9]
+                    this.cardData[i].range = this.repoCardStats.troops[i].range
+                    this.cardData[i].hitpoints = this.repoCardStats.troops[i].hitpoints
+                    this.cardData[i].atackSpeed = this.repoCardStats.troops[i].hit_speed
+                }
+            }, 3000)
         }
     }
 </script>
 
 <style scoped>
-    .clash_royale_app{
+    .clash_royale_app {
+        padding: 40px 30px;
+        position: relative;
+        max-width: 100%;
         display: flex;
-        justify-content: center;
-        align-items: center;
+        flex-wrap: wrap;
         width: 100%;
         height: 100%;
+        overflow-y: auto;
+        max-height: 100%;
     }
 </style>
