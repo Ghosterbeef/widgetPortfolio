@@ -506,7 +506,10 @@
             },
             rollBackElement: function (data) {
                 this.addElement(data)
-                trashCan.splice(trashCan.findIndex(x => x.name === data.name), 1)
+                trashCan.splice(trashCan.findIndex(x => x.name === data.name &&
+                    x.surname === data.surname
+                    && x.patronymic === data.patronymic
+                    && x.age === data.age), 1)
                 this.trashCanLength = trashCan.length
                 if (!this.trashCanLength)
                     this.displayTrashCan = false
@@ -549,7 +552,7 @@
         max-height: 100%;
     }
 
-    .trash_can_header{
+    .trash_can_header {
         z-index: 100;
         grid-template-columns: repeat(5, minmax(30px, 1fr));
         grid-template-rows: max-content;
@@ -564,8 +567,10 @@
         justify-content: center;
     }
 
-    .trash_can_header h3{
+    .trash_can_header h3 {
+        width: 100%;
         color: black;
+        background-color: rgba(138, 43, 226, 0.7);
     }
 
     .table_trashcan_wrapper {
