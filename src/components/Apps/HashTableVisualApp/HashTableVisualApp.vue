@@ -2,59 +2,61 @@
     <section class="hash-table-visual-app">
         <div class="app_container">
             <button class="test_button" @click="addRandomElement">Добавить случайный элемент</button>
-            <div class="hash_table">
-                <div class="hash_table_header">
-                    <button id="hashSort" class="sortChange-btn" @click.stop="sortChange">#
-                        <span class="asc"
-                              v-if="typeOfSort.type === 'hashSort' && typeOfSort.counter === 0"></span>
-                        <span class="desc"
-                              v-else-if="typeOfSort.type === 'hashSort' && typeOfSort.counter === 1"></span>
-                    </button>
-                    <button id="surnameSort" class="sortChange-btn" @click.stop="sortChange">Фамилия
-                        <span class="asc"
-                              v-if="typeOfSort.type === 'surnameSort' && typeOfSort.counter === 0"></span>
-                        <span class="desc"
-                              v-else-if="typeOfSort.type === 'surnameSort' && typeOfSort.counter === 1"></span>
-                    </button>
-                    <button id="nameSort" class="sortChange-btn" @click.stop="sortChange">Имя
-                        <span class="asc"
-                              v-if="typeOfSort.type === 'nameSort' && typeOfSort.counter === 0"></span>
-                        <span class="desc"
-                              v-else-if="typeOfSort.type === 'nameSort' && typeOfSort.counter === 1"></span>
-                    </button>
-                    <button id="patronymicSort" class="sortChange-btn" @click.stop="sortChange">Отчество
-                        <span class="asc"
-                              v-if="typeOfSort.type === 'patronymicSort' && typeOfSort.counter === 0"></span>
-                        <span class="desc"
-                              v-else-if="typeOfSort.type === 'patronymicSort' && typeOfSort.counter === 1"></span>
-                    </button>
-                    <button id="ageSort" class="sortChange-btn" @click.stop="sortChange">Возраст
-                        <span class="asc"
-                              v-if="typeOfSort.type === 'ageSort' && typeOfSort.counter === 0"></span>
-                        <span class="desc"
-                              v-else-if="typeOfSort.type === 'ageSort' && typeOfSort.counter === 1"></span>
-                    </button>
-                </div>
-                <div class="table_trashcan_wrapper">
-                    <div class="hash_table_body">
-                        <Hash_Table_element v-for="(elements, index) in elementsToDraw" :key="index"
-                                            :hash="elements.hash"
-                                            :surname="elements.surname"
-                                            :name="elements.name"
-                                            :patronymic="elements.patronymic"
-                                            :age="elements.age" @deleteElement="deleteElement">
-                        </Hash_Table_element>
+            <transition-group class="table_trashcan_wrapper" tag="div" name="table_trashcan_wrapper">
+                <div class="hash_table_body" :key="'hash_table_body'">
+                    <div class="hash_table_header">
+                        <button id="hashSort" class="sortChange-btn" @click.stop="sortChange">#
+                            <span class="asc"
+                                  v-if="typeOfSort.type === 'hashSort' && typeOfSort.counter === 0"></span>
+                            <span class="desc"
+                                  v-else-if="typeOfSort.type === 'hashSort' && typeOfSort.counter === 1"></span>
+                        </button>
+                        <button id="surnameSort" class="sortChange-btn" @click.stop="sortChange">Фамилия
+                            <span class="asc"
+                                  v-if="typeOfSort.type === 'surnameSort' && typeOfSort.counter === 0"></span>
+                            <span class="desc"
+                                  v-else-if="typeOfSort.type === 'surnameSort' && typeOfSort.counter === 1"></span>
+                        </button>
+                        <button id="nameSort" class="sortChange-btn" @click.stop="sortChange">Имя
+                            <span class="asc"
+                                  v-if="typeOfSort.type === 'nameSort' && typeOfSort.counter === 0"></span>
+                            <span class="desc"
+                                  v-else-if="typeOfSort.type === 'nameSort' && typeOfSort.counter === 1"></span>
+                        </button>
+                        <button id="patronymicSort" class="sortChange-btn" @click.stop="sortChange">Отчество
+                            <span class="asc"
+                                  v-if="typeOfSort.type === 'patronymicSort' && typeOfSort.counter === 0"></span>
+                            <span class="desc"
+                                  v-else-if="typeOfSort.type === 'patronymicSort' && typeOfSort.counter === 1"></span>
+                        </button>
+                        <button id="ageSort" class="sortChange-btn" @click.stop="sortChange">Возраст
+                            <span class="asc"
+                                  v-if="typeOfSort.type === 'ageSort' && typeOfSort.counter === 0"></span>
+                            <span class="desc"
+                                  v-else-if="typeOfSort.type === 'ageSort' && typeOfSort.counter === 1"></span>
+                        </button>
                     </div>
-                    <div class="trashcan_body" v-show="displayTrashCan">
-                        <trash-can-element v-for="(element,index) in trashCan" :key="index"
-                                           :hash="element.hash"
-                                           :surname="element.surname"
-                                           :name="element.name"
-                                           :patronymic="element.patronymic"
-                                           :age="element.age"></trash-can-element>
-                    </div>
+                    <Hash_Table_element v-for="(elements, index) in elementsToDraw" :key="index"
+                                        :hash="elements.hash"
+                                        :surname="elements.surname"
+                                        :name="elements.name"
+                                        :patronymic="elements.patronymic"
+                                        :age="elements.age" @deleteElement="deleteElement">
+                    </Hash_Table_element>
                 </div>
-            </div>
+                <div class="trashcan_body" v-if="displayTrashCan" :key="'trashcan_body'">
+                    <div class="trash_can_header">
+                        <h3>Корзина</h3>
+                    </div>
+                    <trash-can-element v-for="element in trashCan" :key="element.hash"
+                                       :hash="element.hash"
+                                       :surname="element.surname"
+                                       :name="element.name"
+                                       :patronymic="element.patronymic"
+                                       :age="element.age" @rollBack="rollBackElement">
+                    </trash-can-element>
+                </div>
+            </transition-group>
             <div class="control_panel-wrapper">
                 <Hash_table_control_panel :length="trashCanLength" @addElement="addElement"
                                           @searchElement="searchElement"
@@ -88,7 +90,7 @@
                 isSearched: false,
                 trashCanLength: trashCan.length,
                 randomData: null,
-                displayTrashCan: true,
+                displayTrashCan: false,
                 trashCan
             }
         },
@@ -497,9 +499,17 @@
                 this.getElementsToDraw()
             },
             rollBack: function () {
-                this.addElement(trashCan[0])
-                trashCan.splice(0, 1)
+                if (this.trashCanLength)
+                    this.displayTrashCan = !this.displayTrashCan
+                else
+                    this.displayTrashCan = false
+            },
+            rollBackElement: function (data) {
+                this.addElement(data)
+                trashCan.splice(trashCan.findIndex(x => x.name === data.name), 1)
                 this.trashCanLength = trashCan.length
+                if (!this.trashCanLength)
+                    this.displayTrashCan = false
             }
         }
     }
@@ -539,27 +549,40 @@
         max-height: 100%;
     }
 
-    .table_trashcan_wrapper{
-        height: 100%;
+    .trash_can_header{
+        z-index: 100;
+        grid-template-columns: repeat(5, minmax(30px, 1fr));
+        grid-template-rows: max-content;
+        border-bottom: 1px solid black;
+        position: sticky;
+        background-color: rgba(138, 43, 226, 0.7);
+        font-weight: bold;
+        top: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .trash_can_header h3{
+        color: black;
+    }
+
+    .table_trashcan_wrapper {
+        width: 100%;
+        max-height: 40vh;
+        min-height: 40vh;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         overflow: hidden;
     }
 
-    .trashcan_body{
-        padding-top: 50px;
+    .trashcan_body {
+        margin-top: 50px;
         max-height: 50%;
-    }
-
-    .hash_table {
-        width: 100%;
-        min-width: 300px;
-        max-height: 50vh;
-        min-height: 50%;
-        display: flex;
-        flex-direction: column;
-        overflow: auto;
+        min-height: 100px;
+        overflow-y: auto;
     }
 
     .hash_table_header {
@@ -640,6 +663,8 @@
 
     .hash_table_body {
         overflow-y: auto;
+        width: 100%;
+        min-width: 300px;
     }
 
 
@@ -693,5 +718,28 @@
     .search_cancellation:hover {
         transform: scale(1.2);
         background-color: crimson;
+    }
+
+
+    .table_trashcan_wrapper-enter-from {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+
+    .table_trashcan_wrapper-enter-active {
+        transition: all 0.3s ease;
+    }
+
+    .table_trashcan_wrapper-leave-to {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+
+    .table_trashcan_wrapper-leave-active {
+        transition: all 0.3s ease;
+    }
+
+    .table_trashcan_wrapper-move {
+        transition: all 0.3s ease;
     }
 </style>

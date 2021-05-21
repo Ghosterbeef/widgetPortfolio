@@ -11,6 +11,7 @@
 <script>
     export default {
         name: "TrashCanElement",
+        emits: ["rollBack"],
         props: {
             hash: {
                 type: String,
@@ -35,8 +36,7 @@
         },
         methods:{
             rollBack: function () {
-                this.$emit("rollback",{
-                    hash: this.$props.hash,
+                this.$emit("rollBack",{
                     surname: this.$props.surname,
                     name: this.$props.name,
                     patronymic: this.$props.patronymic,
@@ -55,7 +55,8 @@
         grid-template-columns: repeat(5, minmax(0, 1fr));
         margin: 5px 0 5px;
         background-color: white;
-        cursor: pointer;
+        //cursor:pointer;
+        cursor: url("../../Apps/HashTableVisualApp/icons/RollBack.png"), pointer;
     }
 
     .table_element:hover {

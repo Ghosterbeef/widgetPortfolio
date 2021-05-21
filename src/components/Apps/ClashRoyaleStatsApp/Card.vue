@@ -147,7 +147,7 @@
         bottom: 0;
         display: flex;
         flex-direction: column;
-        align-items: start;
+        align-items: flex-start;
         justify-content: space-evenly;
         color: #222222;
         font-size: 15px;

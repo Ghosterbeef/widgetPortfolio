@@ -16,6 +16,7 @@
 <script>
     export default {
         name: "Hash_Table_element",
+        emits: ["deleteElement"],
         props: {
             hash: {
                 type: String,
@@ -44,24 +45,6 @@
           }
         },
         methods: {
-            onElementClick: function (e) {
-                let data
-                if (e.target.tagName !== "div")
-                    data = {
-                        surname: e.target.closest("div").childNodes[1].textContent,
-                        name: e.target.closest("div").childNodes[2].textContent,
-                        patronymic: e.target.closest("div").childNodes[3].textContent,
-                        age: e.target.closest("div").childNodes[4].textContent
-                    }
-                else
-                    data = {
-                        surname: e.target.childNodes[1].textContent,
-                        name: e.target.childNodes[2].textContent,
-                        patronymic: e.target.childNodes[3].textContent,
-                        age: e.target.childNodes[4].textContent
-                    }
-                this.$emit('onElementClick', data, e)
-            },
             deleteElement: function () {
                 this.show = false
                 this.$emit('deleteElement', {

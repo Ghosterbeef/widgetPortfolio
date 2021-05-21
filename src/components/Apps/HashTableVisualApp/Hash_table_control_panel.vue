@@ -78,8 +78,9 @@
                     this.formData.age = this.formData.surname = this.formData.name = this.formData.patronymic = ""
                 }
             },
-            rollBack: function () {
+            rollBack: function (e) {
                 this.$emit("rollBack")
+                this.deleteFocus(e)
             },
             deleteFocus: function (e) {
                 e.target.blur()
@@ -166,6 +167,15 @@
 
     .rollBack_btn-container{
         position: relative;
+    }
+
+    .rollBack_btn-container:hover p,
+    .rollBack_btn-container:focus p{
+        background-color: lightgrey;
+    }
+
+    .rollBack_btn-container p{
+        pointer-events: none;
     }
 
     .length{
