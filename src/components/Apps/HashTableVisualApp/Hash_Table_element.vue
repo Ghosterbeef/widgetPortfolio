@@ -1,5 +1,5 @@
 <template>
-    <div class="table_element" @click="show = !show">
+    <div class="table_element" @click="toggleShow">
         <p class="element_text">{{hash}}</p>
         <p class="element_text">{{surname}}</p>
         <p class="element_text">{{name}}</p>
@@ -16,7 +16,7 @@
 <script>
     export default {
         name: "Hash_Table_element",
-        emits: ["deleteElement"],
+        emits: ["deleteElement", "show"],
         props: {
             hash: {
                 type: String,
@@ -39,12 +39,17 @@
                 required: true
             }
         },
-        data(){
-          return{
-              show: false
-          }
+        data() {
+            return {
+                show: false
+            }
         },
         methods: {
+            toggleShow: function () {
+                this.show = !this.show
+                if (this.show)
+                    this.$emit('show')
+            },
             deleteElement: function () {
                 this.show = false
                 this.$emit('deleteElement', {

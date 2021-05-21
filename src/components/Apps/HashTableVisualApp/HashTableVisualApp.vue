@@ -3,7 +3,7 @@
         <div class="app_container">
             <button class="test_button" @click="addRandomElement">Добавить случайный элемент</button>
             <transition-group class="table_trashcan_wrapper" tag="div" name="table_trashcan_wrapper">
-                <div class="hash_table_body" :key="'hash_table_body'">
+                <div class="hash_table_body" :key="'hash_table_body'" ref="hash_table_body">
                     <div class="hash_table_header">
                         <button id="hashSort" class="sortChange-btn" @click.stop="sortChange">#
                             <span class="asc"
@@ -41,7 +41,7 @@
                                         :surname="elements.surname"
                                         :name="elements.name"
                                         :patronymic="elements.patronymic"
-                                        :age="elements.age" @deleteElement="deleteElement">
+                                        :age="elements.age" @deleteElement="deleteElement" @show="show">
                     </Hash_Table_element>
                 </div>
                 <div class="trashcan_body" v-if="displayTrashCan" :key="'trashcan_body'">
@@ -513,6 +513,16 @@
                 this.trashCanLength = trashCan.length
                 if (!this.trashCanLength)
                     this.displayTrashCan = false
+            },
+            show: function () {
+                const target = this.$refs.hash_table_body
+                let scrolled = 0
+                const internal = setInterval(function () {
+                    target.scrollTop += 1
+                    scrolled += 1
+                    if (30 <= scrolled)
+                        clearInterval(internal)
+                }, 1)
             }
         }
     }

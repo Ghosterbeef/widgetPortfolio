@@ -1,5 +1,5 @@
 <template>
-        <section class="charter weather" @click="this.$router.push({path:'/Apps/WeatherApp'})">
+        <section class="charter weather" @click="openApp">
             <h3>Погода</h3>
             <div id="weather_body" class="weather_body">
                 <input type="text" class="cityName" ref="cityName" v-model="store.state.userData.weatherData.location"
@@ -71,6 +71,10 @@
                         setTimeout(this.updateWeather, 30000)
                     })
             },
+        },
+        openApp: function(e){
+            if (e.target.tagName === "INPUT") return
+            this.$router.push({path:'/Apps/WeatherApp'})
         },
         beforeUnmount() {
             clearInterval(this.weatherUpdateInterval)

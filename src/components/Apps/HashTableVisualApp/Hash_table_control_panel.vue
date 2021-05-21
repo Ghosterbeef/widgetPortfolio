@@ -39,6 +39,10 @@
         },
         methods: {
             addElement: function () {
+                if (this.formData.age <0){
+                    this.formData.age = this.formData.surname = this.formData.name = this.formData.patronymic = ""
+                    return;
+                }
                 if (this.formData.surname === ""
                     && this.formData.name === "" && this.formData.patronymic === ""
                     && this.formData.age === "") {
