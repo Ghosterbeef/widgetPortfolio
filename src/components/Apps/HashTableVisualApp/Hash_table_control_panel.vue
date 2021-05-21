@@ -11,7 +11,7 @@
         <button class="deleteElement-btn" @click.prevent="deleteElement" @mouseup="deleteFocus">Удалить</button>
         <div class="rollBack_btn-container">
             <button class="rollBack-btn" @click.prevent="rollBack" @mouseup="deleteFocus" :disabled="length===0">
-                <img src="./icons/rollBack1.svg" alt="Откат">
+                <img src="./icons/bin.svg" alt="Откат">
             </button>
             <p v-if="length!==0" class="length">{{length}}</p>
         </div>

@@ -570,7 +570,7 @@
     .trash_can_header h3 {
         width: 100%;
         color: black;
-        background-color: rgba(138, 43, 226, 0.7);
+        background-color: rgba(138, 43, 226, 1);
     }
 
     .table_trashcan_wrapper {
@@ -597,7 +597,7 @@
         grid-template-rows: max-content;
         border-bottom: 1px solid black;
         position: sticky;
-        background-color: rgba(138, 43, 226, 0.7);
+        background-color: rgba(138, 43, 226, 1);
         color: #2c3e50;
         font-weight: bold;
         top: 0;
