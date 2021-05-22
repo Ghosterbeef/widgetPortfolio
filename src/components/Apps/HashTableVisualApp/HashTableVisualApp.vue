@@ -41,7 +41,8 @@
                                         :surname="elements.surname"
                                         :name="elements.name"
                                         :patronymic="elements.patronymic"
-                                        :age="elements.age" @deleteElement="deleteElement" @show="show">
+                                        :age="elements.age"
+                                         @deleteElement="deleteElement" @show="show">
                     </Hash_Table_element>
                 </div>
                 <div class="trashcan_body" v-if="displayTrashCan" :key="'trashcan_body'">
@@ -87,6 +88,7 @@
                     type: "default",
                     counter: 0
                 },
+                isCloseAll: false,
                 isSearched: false,
                 trashCanLength: trashCan.length,
                 randomData: null,
@@ -571,16 +573,12 @@
         background-color: rgba(138, 43, 226, 0.7);
         font-weight: bold;
         top: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
     }
 
     .trash_can_header h3 {
         width: 100%;
         color: black;
-        background-color: rgba(138, 43, 226, 1);
+        background-color: rgba(252, 70, 107, 1);
     }
 
     .table_trashcan_wrapper {
@@ -591,6 +589,7 @@
         flex-direction: column;
         justify-content: space-between;
         overflow: hidden;
+        position: relative;
     }
 
     .trashcan_body {
@@ -754,7 +753,4 @@
         transition: all 0.3s ease;
     }
 
-    .table_trashcan_wrapper-move {
-        transition: all 0.3s ease;
-    }
 </style>

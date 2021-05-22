@@ -1,5 +1,5 @@
 <template>
-    <div class="table_element" @click="toggleShow">
+    <div class="table_element" @click="toggleShow" :class="{spirit:show}">
         <p class="element_text">{{hash}}</p>
         <p class="element_text">{{surname}}</p>
         <p class="element_text">{{name}}</p>
@@ -41,7 +41,7 @@
         },
         data() {
             return {
-                show: false
+                show: false,
             }
         },
         methods: {
@@ -74,6 +74,7 @@
 
     .table_element:hover {
         background-color: rgba(252, 70, 107, 1);
+        cursor: url("./icons/down-arrow.png") 12 12,pointer;
     }
 
     .element_text {
@@ -110,6 +111,15 @@
     .deleteElement button:hover,
     .deleteElement button:focus {
         background-color: red;
+        cursor: url("./icons/bin2.png") 12 12, pointer;
+    }
+
+    .spirit{
+        opacity: 0.5;
+    }
+
+    .spirit:hover{
+        cursor: url("./icons/up-arrow.png") 12 12,pointer;
     }
 
 

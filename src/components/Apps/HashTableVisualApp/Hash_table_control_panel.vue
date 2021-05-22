@@ -11,9 +11,9 @@
         <button class="deleteElement-btn" @click.prevent="deleteElement" @mouseup="deleteFocus">Удалить</button>
         <div class="rollBack_btn-container">
             <button class="rollBack-btn" @click.prevent="rollBack" @mouseup="deleteFocus" :disabled="length===0">
-                <img src="./icons/bin.svg" alt="Откат">
+                <img src="./icons/bin2.png" alt="Откат">
+                <span v-if="length!==0" class="length">{{length}}</span>
             </button>
-            <p v-if="length!==0" class="length">{{length}}</p>
         </div>
     </div>
 </template>
@@ -130,8 +130,8 @@
     }
 
     .rollBack-btn {
-        background-color: white;
         border: 2px solid black;
+        position: relative;
         color: black;
     }
 
@@ -143,16 +143,19 @@
     .addElement-btn:hover, .addElement-btn:focus {
         color: white;
         background-color: lime;
+        cursor: url("./icons/plus.png") 12 12, pointer;
     }
 
     .searchElement-btn:hover, .searchElement-btn:focus {
         color: white;
         background-color: blueviolet;
+        cursor: url("./icons/search.png") 12 12, pointer;
     }
 
     .deleteElement-btn:hover, .deleteElement-btn:focus {
         color: white;
         background-color: red;
+        cursor: url("./icons/bin2.png") 12 12, pointer;
     }
 
     .rollBack-btn:hover, .rollBack-btn:focus {
@@ -163,23 +166,21 @@
         background-color: white;
         border: 2px solid rgba(0, 0, 0, 0.5);
         color: rgba(0, 0, 0, 0.5);
+
     }
 
     .rollBack-btn:disabled:hover {
-        cursor: default;
+        cursor: url("./icons/block.png") 12 12, no-drop;
     }
 
     .rollBack_btn-container{
         position: relative;
     }
 
-    .rollBack_btn-container:hover p,
-    .rollBack_btn-container:focus p{
-        background-color: lightgrey;
-    }
-
-    .rollBack_btn-container p{
-        pointer-events: none;
+    .rollBack_btn-container span{
+        top:0;
+        display: inline-block;
+        background: inherit;
     }
 
     .length{

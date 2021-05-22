@@ -56,11 +56,11 @@
         margin: 5px 0 5px;
         background-color: white;
         //cursor:pointer;
-        cursor: url("../../Apps/HashTableVisualApp/icons/RollBack.png"), pointer;
+        cursor: url("../../Apps/HashTableVisualApp/icons/RollBack.png") 12 10, pointer;
     }
 
     .table_element:hover {
-        background-color: rgba(252, 70, 107, 1);
+        background-color: rgba(138, 43, 226, 1);
     }
 
     .element_text {

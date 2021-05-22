@@ -47,7 +47,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin: 5px;
+        margin: 5%;
         opacity:0;
         animation:move 2s linear infinite;
         -o-animation:move 2s linear infinite;
@@ -61,68 +61,68 @@
     }
 
     .box:nth-child(2) {
-        animation-delay:0.1s;
-        -o-animation-delay:0.1s;
-        -moz-animation-delay:0.1s;
-        -webkit-animation-delay:0.1s;
-    }
-    .box:nth-child(3) {
         animation-delay:0.2s;
         -o-animation-delay:0.2s;
         -moz-animation-delay:0.2s;
         -webkit-animation-delay:0.2s;
     }
-    .box:nth-child(4) {
-        animation-delay:0.3s;
-        -o-animation-delay:0.3s;
-        -moz-animation-delay:0.3s;
-        -webkit-animation-delay:0.3s;
-    }
-    .box:nth-child(5) {
+    .box:nth-child(3) {
         animation-delay:0.4s;
         -o-animation-delay:0.4s;
         -moz-animation-delay:0.4s;
         -webkit-animation-delay:0.4s;
     }
-    .box:nth-child(6) {
-        animation-delay:0.5s;
-        -o-animation-delay:0.5s;
-        -moz-animation-delay:0.5s;
-        -webkit-animation-delay:0.5s;
-    }
-    .box:nth-child(7) {
+    .box:nth-child(4) {
         animation-delay:0.6s;
         -o-animation-delay:0.6s;
         -moz-animation-delay:0.6s;
         -webkit-animation-delay:0.6s;
     }
-
-    .box:nth-child(8) {
-        animation-delay:0.7s;
-        -o-animation-delay:0.7s;
-        -moz-animation-delay:0.7s;
-        -webkit-animation-delay:0.7s;
-    }
-
-    .box:nth-child(9) {
+    .box:nth-child(5) {
         animation-delay:0.8s;
         -o-animation-delay:0.8s;
         -moz-animation-delay:0.8s;
         -webkit-animation-delay:0.8s;
     }
-
-    .box:nth-child(10) {
-        animation-delay:0.9s;
-        -o-animation-delay:0.9s;
-        -moz-animation-delay:0.9s;
-        -webkit-animation-delay:0.9s;
-    }
-
-    .box:nth-child(11) {
+    .box:nth-child(6) {
         animation-delay:1s;
         -o-animation-delay:1s;
         -moz-animation-delay:1s;
         -webkit-animation-delay:1s;
+    }
+    .box:nth-child(7) {
+        animation-delay:1.2s;
+        -o-animation-delay:1.2s;
+        -moz-animation-delay:1.2s;
+        -webkit-animation-delay:1.2s;
+    }
+
+    .box:nth-child(8) {
+        animation-delay:1.4s;
+        -o-animation-delay:1.4s;
+        -moz-animation-delay:1.4s;
+        -webkit-animation-delay:1.4s;
+    }
+
+    .box:nth-child(9) {
+        animation-delay:1.6s;
+        -o-animation-delay:1.6s;
+        -moz-animation-delay:1.6s;
+        -webkit-animation-delay:1.6s;
+    }
+
+    .box:nth-child(10) {
+        animation-delay:1.8s;
+        -o-animation-delay:1.8s;
+        -moz-animation-delay:1.8s;
+        -webkit-animation-delay:1.8s;
+    }
+
+    .box:nth-child(11) {
+        animation-delay:2s;
+        -o-animation-delay:2s;
+        -moz-animation-delay:2s;
+        -webkit-animation-delay:2s;
     }
 
     @keyframes move {
