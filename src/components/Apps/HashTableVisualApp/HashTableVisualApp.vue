@@ -4,7 +4,7 @@
             <button class="test_button" @click="addRandomElement">Добавить случайный элемент</button>
             <transition-group class="table_trashcan_wrapper" tag="div" name="table_trashcan_wrapper">
                 <div class="hash_table_body" :key="'hash_table_body'" ref="hash_table_body">
-                    <div class="hash_table_header">
+                    <div class="hash_table_header" :key="'header'">
                         <button id="hashSort" class="sortChange-btn" @click.stop="sortChange">#
                             <span class="asc"
                                   v-if="typeOfSort.type === 'hashSort' && typeOfSort.counter === 0"></span>
@@ -36,17 +36,17 @@
                                   v-else-if="typeOfSort.type === 'ageSort' && typeOfSort.counter === 1"></span>
                         </button>
                     </div>
-                    <Hash_Table_element v-for="(elements, index) in elementsToDraw" :key="index"
-                                        :hash="elements.hash"
-                                        :surname="elements.surname"
-                                        :name="elements.name"
-                                        :patronymic="elements.patronymic"
-                                        :age="elements.age"
-                                         @deleteElement="deleteElement" @show="show">
-                    </Hash_Table_element>
+                        <Hash_Table_element v-for="(elements, index) in elementsToDraw" :key="index"
+                                            :hash="elements.hash"
+                                            :surname="elements.surname"
+                                            :name="elements.name"
+                                            :patronymic="elements.patronymic"
+                                            :age="elements.age"
+                                            @deleteElement="deleteElement" @show="show">
+                        </Hash_Table_element>
                 </div>
                 <div class="trashcan_body" v-if="displayTrashCan" :key="'trashcan_body'">
-                    <div class="trash_can_header">
+                    <div class="trash_can_header" @click="displayTrashCan = false">
                         <h3>Корзина</h3>
                     </div>
                     <trash-can-element v-for="element in trashCan" :key="element.hash"
@@ -579,23 +579,29 @@
         width: 100%;
         color: black;
         background-color: rgba(252, 70, 107, 1);
+        cursor: pointer;
+    }
+
+    .trash_can_header:hover h3{
+        background-color: rgb(219, 50, 85);
     }
 
     .table_trashcan_wrapper {
         width: 100%;
         max-height: 40vh;
+        height: 100%;
         min-height: 40vh;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        gap: 30px;
         overflow: hidden;
         position: relative;
     }
 
     .trashcan_body {
-        margin-top: 50px;
         max-height: 50%;
-        min-height: 100px;
+        min-height: 150px;
         overflow-y: auto;
     }
 

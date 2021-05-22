@@ -1,16 +1,18 @@
 <template>
-    <div class="table_element" @click="toggleShow" :class="{spirit:show}">
-        <p class="element_text">{{hash}}</p>
-        <p class="element_text">{{surname}}</p>
-        <p class="element_text">{{name}}</p>
-        <p class="element_text">{{patronymic}}</p>
-        <p class="element_text">{{age}}</p>
-    </div>
-    <transition class="delEl" name="delEl" v-show="show">
-        <div class="deleteElement">
-            <button type="button" @click="deleteElement">Удалить элемент</button>
+   <div class="element_wrapper">
+        <div class="table_element" @click="toggleShow" :class="{spirit:show}">
+            <p class="element_text">{{hash}}</p>
+            <p class="element_text">{{surname}}</p>
+            <p class="element_text">{{name}}</p>
+            <p class="element_text">{{patronymic}}</p>
+            <p class="element_text">{{age}}</p>
         </div>
-    </transition>
+        <transition class="delEl" name="delEl" v-show="show">
+            <div class="deleteElement">
+                <button type="button" @click="deleteElement">Удалить элемент</button>
+            </div>
+        </transition>
+    </div>
 </template>
 
 <script>
@@ -74,7 +76,7 @@
 
     .table_element:hover {
         background-color: rgba(252, 70, 107, 1);
-        cursor: url("./icons/down-arrow.png") 12 12,pointer;
+        cursor: url("./icons/down-arrow.png") 12 12, pointer;
     }
 
     .element_text {
@@ -114,12 +116,12 @@
         cursor: url("./icons/bin2.png") 12 12, pointer;
     }
 
-    .spirit{
+    .spirit {
         opacity: 0.5;
     }
 
-    .spirit:hover{
-        cursor: url("./icons/up-arrow.png") 12 12,pointer;
+    .spirit:hover {
+        cursor: url("./icons/up-arrow.png") 12 12, pointer;
     }
 
 
